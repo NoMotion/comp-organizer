@@ -1,0 +1,3105 @@
+<!-- 
+****************
+Insert Printer Link on HTML (594)
+merges/MLSPrintOnHTML_v2.htm
+05/17/0666 MF 
+03/12/2007 BT Virtual Earth map Enhancement
+5/3/10 TG SBI 16719 New Merge form for PDF Creator
+****************
+-->
+
+<html>
+<head>
+<title></title>
+
+<link type="text/css" rel="stylesheet" href="http://mediall.rapmls.com/CSS/MLSGlobal.css?Arg=02.2" media="screen" />
+<link type="text/css" rel="stylesheet" href="http://mediall.rapmls.com/CSS/MLSGlobalPrint.css?Arg=02.2" media="print" />
+
+<style type="text/css">
+    .ReportButton
+    {
+        height: 40px;
+        margin: 2px 5px 2px 0px;
+        padding: 0px 0px 0px 15px;
+        WIDTH:130px;
+        text-align: center;
+    }
+
+    .ReportPrint
+    {
+        background: white url(http://mediall.rapmls.com/rapmlsimages//print.gif) no-repeat 10px 10px;    
+    }
+
+    .PDFPrint
+    {
+        background: white url(http://mediall.rapmls.com/rapmlsimages//adobe.gif) no-repeat 10px 10px;    
+    }
+    
+    #reportPrintLinks
+    {
+        height:44px;
+        background: #ffffff;
+    }
+    
+    #newprintLink
+    {
+        height:44px;
+        background:#f0f0f0;
+        border: 1px solid #a8a8a8;
+        width:100%;
+        margin:0px 0px 15px 0px;
+        position:fixed;
+        top:0px;
+    }
+    
+    #loading
+    {
+        display:none;
+        position:absolute;
+        z-index:999;
+        top:0px;
+        height: 100%;
+        width: 100%;
+    }
+</style>
+
+<script type="text/javascript" src="http://mediall.rapmls.com/js/jquery/jquery.rapattoni.min.js?Arg=10-12-2015_16-56-56"></script>
+<script type="text/javascript" src="http://mediall.rapmls.com/js/crossbrowserlibrary.js?Arg=10-12-2015_16-56-56"></script>
+<script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6.3&mkt=en-us"></script>
+<script type="text/javascript" src="http://mediall.rapmls.com/MagicJs/MLSVirtualEarth.js?Arg=10-12-2015_16-56-56"></script>
+<script type="text/javascript">
+    var sLoginBaseURL = "http://loginlax.rapmls.com/";
+    var sReportBaseURL = "http://reportlax.rapmls.com/";
+    var iPictureContextMenu = "2";
+    var sessionNumber = 111697410;
+    var pdfCreatorCall = false;//SBI 12771, TG, 2/17/2010 - Server Side PDF Creator
+    var formVariables = 'IsHotsheet=&PRGNAME=MLSReceiveReport&ARGUMENTS=-N111697410, -AS, -N90002315, -AM, -N0, -AM&Report_Code=RBARI03&Multi_Report=Y&Prospect_RID=0&SessionNumber=111697410&ReportRids=&Mls=BARI&PicturesonReports=True&_&_ctl0:gvReport:_ctl2:chkPrepBy=on&_ctl0:gvReport:_ctl3:chkPrepBy=on&_ctl0:gvReport:_ctl4:chkPrepBy=on&_ctl0:gvReport:_ctl5:chkPrepBy=on&_ctl0:gvReport:_ctl6:chkPrepBy=on&_ctl0:gvReport:_ctl7:chkPrepBy=on&_ctl0:gvReport:_ctl8:chkPrepBy=on&_ctl0:gvReport:_ctl9:chkPrepBy=on&_ctl0:gvReport:_ctl10:chkPrepBy=on&_ctl0:gvReport:_ctl11:chkPrepBy=on&_ctl0:gvReport:_ctl12:chkPrepBy=on&_ctl0:gvReport:_ctl13:chkPrepBy=on&_ctl0:gvReport:_ctl14:chkPrepBy=on&_ctl0:gvReport:_ctl15:chkPrepBy=on&_ctl1:gvReport:_ctl2:txtSort=&_ctl1:gvReport:_ctl2:chkIncPic=on&_ctl1:gvReport:_ctl3:txtSort=&_ctl1:gvReport:_ctl3:chkIncPic=on&_ctl1:gvReport:_ctl4:txtSort=&_ctl1:gvReport:_ctl4:chkIncPic=on&_ctl1:gvReport:_ctl5:txtSort=&_ctl1:gvReport:_ctl5:chkIncPic=on&_ctl1:gvReport:_ctl6:txtSort=&_ctl1:gvReport:_ctl6:chkIncPic=on&_ctl1:gvReport:_ctl7:txtSort=&_ctl1:gvReport:_ctl7:chkIncPic=on&_ctl1:gvReport:_ctl8:txtSort=&_ctl1:gvReport:_ctl8:chkIncPic=on&_ctl1:gvReport:_ctl9:txtSort=&_ctl1:gvReport:_ctl9:chkIncPic=on&_ctl1:gvReport:_ctl10:txtSort=&_ctl1:gvReport:_ctl10:chkIncPic=on&_ctl1:gvReport:_ctl11:txtSort=&_ctl1:gvReport:_ctl11:chkIncPic=on&_ctl1:gvReport:_ctl12:txtSort=&_ctl1:gvReport:_ctl12:chkIncPic=on&_ctl1:gvReport:_ctl13:txtSort=&_ctl1:gvReport:_ctl13:chkIncPic=on&_ctl1:gvReport:_ctl14:txtSort=&_ctl1:gvReport:_ctl14:chkIncPic=on&_ctl1:gvReport:_ctl15:txtSort=&_ctl1:gvReport:_ctl15:chkIncPic=on&_ctl1:gvReport:_ctl16:txtSort=&_ctl1:gvReport:_ctl16:chkIncPic=on&_ctl1:gvReport:_ctl17:txtSort=&_ctl1:gvReport:_ctl17:chkIncPic=on&_ctl1:gvReport:_ctl18:txtSort=&_ctl1:gvReport:_ctl18:chkPrepBy=on&_ctl1:gvReport:_ctl18:chkIncPic=on&_ctl1:gvReport:_ctl19:txtSort=&_ctl1:gvReport:_ctl19:chkIncPic=on&_ctl1:gvReport:_ctl20:txtSort=&_ctl1:gvReport:_ctl20:chkIncPic=on&_ctl1:gvReport:_ctl21:txtSort=&_ctl1:gvReport:_ctl22:txtSort=&_ctl1:gvReport:_ctl22:chkIncPic=on&_ctl1:gvReport:_ctl23:txtSort=&_ctl1:gvReport:_ctl23:chkIncPic=on&_ctl1:gvReport:_ctl24:txtSort=&_ctl1:gvReport:_ctl24:chkIncPic=on&_ctl1:gvReport:_ctl25:txtSort=&_ctl1:gvReport:_ctl25:chkIncPic=on&_ctl1:gvReport:_ctl26:txtSort=&_ctl1:gvReport:_ctl26:chkIncPic=on&_ctl1:gvReport:_ctl27:txtSort=&_ctl1:gvReport:_ctl27:chkPrepBy=on&_ctl1:gvReport:_ctl27:chkIncPic=on&_ctl1:gvReport:_ctl28:txtSort=&_ctl1:gvReport:_ctl28:chkPrepBy=on&_ctl1:gvReport:_ctl28:chkIncPic=on&_ctl1:gvReport:_ctl29:txtSort=&_ctl1:gvReport:_ctl29:chkPrepBy=on&_ctl1:gvReport:_ctl29:chkIncPic=on&_ctl1:gvReport:_ctl30:txtSort=&_ctl1:gvReport:_ctl30:chkPrepBy=on&_ctl1:gvReport:_ctl30:chkIncPic=on&_ctl1:gvReport:_ctl31:txtSort=&_ctl1:gvReport:_ctl31:chkPrepBy=on&_ctl1:gvReport:_ctl31:chkIncPic=on&_ctl1:gvReport:_ctl32:txtSort=&_ctl1:gvReport:_ctl32:chkPrepBy=on&_ctl1:gvReport:_ctl32:chkIncPic=on&_ctl1:gvReport:_ctl33:txtSort=&_ctl1:gvReport:_ctl34:txtSort=&_ctl1:gvReport:_ctl35:txtSort=&_ctl1:gvReport:_ctl36:txtSort=&_ctl1:gvReport:_ctl37:txtSort=&_ctl1:gvReport:_ctl38:txtSort=&_ctl1:gvReport:_ctl39:txtSort=&_ctl1:gvReport:_ctl40:txtSort=&_ctl1:gvReport:_ctl41:txtSort=&_ctl1:gvReport:_ctl42:txtSort=&_ctl1:gvReport:_ctl43:txtSort=&_ctl1:gvReport:_ctl43:chkIncPic=on&_ctl1:gvReport:_ctl44:txtSort=&ucReportOptions:rgrpFormatSelect=rbtnHTML&hdnReportSelected=1&hdnMagicUrl=&Report_Code_String=BARI03&hdnSelectedListings=,684435,688307,691342,695532,696233,696553,&hdnSPListingRID=0&Listing_RID_String=684435,688307,691342,695532,696233,696553&nIncrement=1&bSortAsSelected=&APPNAME=Bareis&Sort_String=STARPR|AAA&Include_Pictures_String=on&Show_Prepared_By_String=off&OTHER_RID_String=&Type_Of_Search=Empty&Search_RID=90002315&Report_Format=HTML&IsArchivedSearch=no&hdnProspectRID=&whatBrowser=IE';
+    var isMultiReportSelection = true; // RNI#120628-000171 JTiu 07/09/2012. Multiple report selected indicator.
+    var map = null;
+    var sRapMLSImages = "http://mediall.rapmls.com/rapmlsimages/"
+    var mgMapPinFile = sRapMLSImages + '/VE_icons/VEMarker.gif';
+
+    
+    function enablePDFConverter() {
+        if(formVariables!='') {
+            document.getElementById('btnConvert').style.display="";
+        }
+    }
+
+    function getPictureContextMenuFlag(isPrimary) {
+        var flag = 0;
+        switch(iPictureContextMenu) {
+            case "0": flag = 0;
+            break;
+            case "1": flag = 1;
+            break;
+            case "2": flag = 1; 
+            break;
+            case "3": if(isPrimary != 1) flag =  0; else flag =  1;
+            break;
+            case "4": if(isPrimary != 1) { flag =  0; } else { flag =  1; }
+            break;
+        }
+        return flag;
+    }
+
+    function ViewPicture(nPictureWidth, sPictureFilename, isPrimary) {
+        var myWidth = nPictureWidth + 40;
+        var myHeight = myWidth * .75;
+        var myTop = (window.screen.height - myHeight)/2;
+        var myLeft = (window.screen.width - myWidth)/2;
+        var path;
+
+        if (sPictureFilename.indexOf(".jpg") > 0) {
+            var flag = getPictureContextMenuFlag(isPrimary);
+            path = sLoginBaseURL+'/PictureHolder.html?PictureFilename=' + sPictureFilename + '&flag =' + flag;
+        }
+        else {
+            path = sPictureFilename;
+        }
+
+        var popupWin = window.open(path ,'remote', 'menubar=no,toolbar=no,resizable=yes,directories=no,scrollbars=yes,status=no,height=' + myHeight + ',width=' + myWidth + ',left=' + myLeft + ',top=' + myTop);
+        popupWin.focus();
+    }
+
+    function convert2PDF() {
+        document.getElementById('btnConvert').disabled = true;
+        document.getElementById('btnConvert').value = 'Please wait...';
+
+        generateFormVariables();
+
+        // RNI#120628-000171 JTiu 07/09/2012.
+        // Turn on the Internal browser Control and increase the load buffer.
+        if (isMultiReportSelection) {
+            var useInternalBrowserControl = document.getElementById('pdf:UseInternalBrowserControl');
+            var internalBrowserLoadBuffer = document.getElementById('pdf:InternalBrowserLoadBuffer');
+
+            useInternalBrowserControl.value = 'False';
+            internalBrowserLoadBuffer.value = '300';
+        }
+
+        $("input[name='ARGUMENTS']").val( $("input[name='ARGUMENTS']").val() + '&pdfCreator=Y' );
+        document.getElementById('pdf:PostURL').value = document.location;
+        document.getElementById('PDFForm').action = sReportBaseURL + 'ConvertToPDF.aspx?SessionNumber=' + sessionNumber;
+        if(getIsNativePdfSupport()) {
+            document.getElementById('loading').style.display= '';
+            document.body.style.overflow = "hidden";
+            document.body.scroll = "no";
+        }
+        document.getElementById('btnSubmit').click();
+    }
+
+    //SBI 12771, TG, 2/17/2010 - Server Side PDF Creator
+    function PDFCreatorCall() {
+        if(pdfCreatorCall) {
+            // only hide the print control on the PDF output if call came from the PDF Creator.
+            document.getElementById('reportPrintLinks').style.display = "none";
+        }
+    }
+
+    window.onload = function () {
+        enablePDFConverter(); // Hide PDF Creator if no formVariables exist
+        PDFCreatorCall();//Server Side PDF Creator
+        LoadMaps();//Virtual Earth map
+        GetMap (15);//Virtual Earth for single map
+    }
+
+    // This function will recreate all the form variables from the subitting page. This is needed on the page when calling the PDF creator
+    function generateFormVariables() {
+        var objElements = document.forms["PDFForm"].elements;
+        var aFormValues = new Array(); 
+        var aArgumentValue = new Array();
+        var strToken = '&';
+        var argToken = '=';
+        var FormValueIndex = 0;
+    
+        // Fetch strings from merge from and put them into arrays
+        aFormValues = formVariables.split(strToken); // The formVariables come from the previous page. (see global js variable)
+
+        if(aFormValues != null && aFormValues !='') {
+            for(FormValueIndex in aFormValues) {
+                aArgumentValue = aFormValues[FormValueIndex].split(argToken); // split each Pair into Name and Value.
+                $("<input type='hidden' name='"+ aArgumentValue[0] + "' value='" + aArgumentValue[1]  + "'>").appendTo("#PDFForm");
+            }
+            $("<input type='submit' id='btnSubmit' name='btnSubmit' value='submit' class='HiddenButton'>").appendTo("#PDFForm");
+        }
+    }
+
+    function printToFitPage() {
+        //RNI#130731-000160 Aflamm 9/17/2013 Chrome - Details printing on 2 pages --> Chrome does not have FitToPage
+        if(getIsChrome()) {
+            // We have to reduce the font size and line spacing to fit printout on one page, because Chrome has no fitToPage()
+            $("TD").css("font-size","7.5pt");
+            // line spacing
+            $("TD").css("line-height", "1.12em");
+        }
+        //RNI 120905-000067 AF,10/17/13 - Desktop - ** Input ** Area Market Survey by Area not page breaking correctly
+        else if ($(":header:contains('Area Market Survey')").text().length > 0) {
+            // We have to reduce the font size and line spacing to fit more lines on the page
+            $("TD").css("font-size","7pt");
+            // line spacing
+            $("TD").css("line-height", "1.12em");	
+        }
+        print();
+    }
+
+</script>
+</head>
+
+<body>
+    <form name="PDFForm" id="PDFForm" method="post" class="ScreenOnly">
+        <input type="hidden" name="pdf:PostURL" id="pdf:PostURL" value="" />
+        <input type="hidden" name="pdf:HorizontalPadding" id="pdf:HorizontalPadding"  value="10" />
+        <input type="hidden" name="pdf:VerticalPadding" id="pdf:VerticalPadding" value="10" />
+        <input type="hidden" name="pdf:BrowserWidth" id="pdf:BrowserWidth" value="950" />
+        <input type="hidden" name="pdf:EnableLinks" id="pdf:EnableLinks"  value="FALSE" />
+        <input type="hidden" name="pdf:SaveQuality" id="pdf:SaveQuality" value="5" />
+        <input type="hidden" name="pdf:ImageQuality" id="pdf:ImageQuality" value="75" />
+        <input type="hidden" name="pdf:PageOrientation" id="pdf:PageOrientation" value="Portrait" />
+        <input type="hidden" name="pdf:UseInternalBrowserControl" id="pdf:UseInternalBrowserControl" value="False" /> 
+        <input type="hidden" name="pdf:InternalBrowserLoadBuffer" id="pdf:InternalBrowserLoadBuffer" value="0" /> 
+        <input type="hidden" name="pdf:MediaServerDomain" id="pdf:MediaServerDomain" value="http://mediall.rapmls.com/" /> 
+        
+        <div id="reportPrintLinks" class="ScreenOnly">
+            <div id="newprintLink" class="ScreenOnly">
+                <input onclick="printToFitPage();" id="btnPrint" type="button" value="Print this Page" class="ReportButton ReportPrint" />	
+                <input onclick="convert2PDF();" id="btnConvert" style="display:none" type="button" value="Open as PDF" class="ReportButton PDFPrint" />
+            </div>
+        </div>
+
+         <!--Exlude in call from PDF Creator--->
+        <iframe id="loading" frameborder="0" name="Loading" scrolling="no" src="http://loginlax.rapmls.com/Loading.aspx?&SessionNumber=111697410"></iframe>
+            </form>
+</body>
+</html>
+<!-- MLSReportBari_2.htm -->
+<HTML>
+<HEAD>
+
+<STYLE TYPE="text/css">      
+    
+    TR
+	{
+		vertical-align: top;
+	}
+	FONT
+	{
+		vertical-align: top;
+	}
+	.mHeightAndBoldText
+	{
+		/*height:15;*/
+		font-family:Arial;
+		font-size:9pt;
+		font-weight:bold;
+	}
+
+	.mHeightAndNormalText
+	{
+		/*height:14;*/
+		font-family:Arial;
+		font-size:9pt;
+	}
+	.mHeightAndNormalText12
+	{
+		font-family:Arial;
+		font-size:12pt;
+	}
+
+	.mHeight14AndBoldText
+	{
+		/*height:14;*/
+		font-family:Arial;
+		font-size:9pt;
+		font-weight:bold;
+	}
+	.mHeight14AndNormalText
+	{
+		/*height:14;*/
+		font-family:Arial;
+		font-size:9pt;
+	}
+	.mHeightAndBoldTextSize10
+	{
+		height:15;
+		font-family:Arial;
+		font-size:10pt;
+		font-weight:bold;
+	}
+	.mHeightAndNormalTextSize10
+	{
+		height:15;
+		font-family:Arial;
+		font-size:10pt;
+	}
+	.mHeightAndBoldTextSize8
+	{
+		height:15;
+		font-family:Arial;
+		font-size:8pt;
+		font-weight:bold;
+	}
+	.mHeightAndNormalTextSize8
+	{
+		height:15;
+		font-family:Arial;
+		font-size:8pt;
+	}
+	.mHeight14AndNormalTextSize8
+	{
+		height:14;
+		font-family:Arial;
+		font-size:8pt;
+	}
+	.sHeightAndBoldTextSize7
+	{
+		height:15;
+		font-family:Arial;
+		font-size:7pt;
+		font-weight:bold;
+	}
+	.sHeight14AndBoldTextSize7
+	{
+		height:14;
+		font-family:Arial;
+		font-size:7pt;
+		font-weight:bold;
+	}
+	.sHeightAndNormalTextSize7
+	{
+		height:15;
+		font-family:Arial;
+		font-size:7pt;
+	}
+	.sHeight14AndNormalTextSize7
+	{
+		height:14;
+		font-family:Arial;
+		font-size:7pt;
+	}
+	.sHeightAndBoldTextSize6
+	{
+		height:15;
+		font-family:Arial;
+		font-size:6pt;
+		font-weight:bold;
+	}
+	.sHeight14AndNormalTextSize6
+	{
+		height:14;
+		font-family:Arial;
+		font-size:6pt;
+	}
+	.sHeightAndNormalTextSize6
+	{
+		height:15;
+		font-family:Arial;
+		font-size:6pt;
+	}
+    
+	.pagebreak
+	{
+		page-break-before:always;
+	}
+	.NormalText
+	{
+		font-family: arial;
+		font-size: 8pt;
+	}
+
+	.LargeText
+	{
+		font-family: arial;
+		font-size: 9pt;
+		font-weight:bold;
+	}
+
+	.LargerLabel
+	{
+		font-family: arial;
+		font-size: 9pt;
+		font-weight:bold;
+	}
+
+	.LargerText
+	{
+		font-family: arial;
+		font-size: 9pt;
+	}
+
+	.NormalLabel
+	{
+		font-family: arial;
+		font-size: 8pt;
+		font-weight:bold;
+	}
+
+	.NormalText
+	{
+		font-family: arial;
+		font-size: 8pt;
+	}
+
+
+</STYLE>
+<!-- 		height:15; -->
+<SCRIPT language="javascript">
+
+/** Begin Virtual Media **/
+	function openVirtualMediaWindow(MLNumber)
+	{
+		var openVirtualMediaWindow = window.open ('/scripts/mgrqispi.dll?APPNAME=Bareis&PRGNAME=MLSVirtualMedia&ARGUMENTS=-N111697410,-N' + MLNumber + ',-N3', 'mediaWin')
+	}
+/** End Virtual Media **/
+
+	var sMagicPath = '/scripts/mgrqispi.dll?APPNAME=Bareis&PRGNAME=' // Magic Tags;;
+	function ViewAllPictures(nMLNumber,sSearchType)
+	{
+		var myTop = 0 //(window.screen.height - 310)/2;
+		var myLeft = 0 //(window.screen.width - 600)/2;
+		var objPrinterFriendlyWindow = window.open (sMagicPath+'MLSPictureDescriptions&ARGUMENTS=-N111697410,-N'+nMLNumber+',-A'+sSearchType+',-N0,-ARR', 'newWin', 'menubar=yes,toolbar=no,resizable=yes,directories=no,scrollbars=yes,status=no,width=685,height=600,left=' + myLeft + ',top=' + myTop);
+	}
+
+</SCRIPT>
+</HEAD>
+
+<BODY>
+
+	
+		<table border="0" width="100%" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="100%" align="center"><DIV class='LargeText'>Agent One Page Residential</DIV></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																																																																																			 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="10%"  class="LargerLabel"  >21522349</td>
+				<td nowrap width="18%"  class="LargerLabel"  >577 Morning Glory Dr</td>
+				<td nowrap width="17%"  class="LargerLabel"  >Benicia / D0201</td>
+				<td nowrap width="5%"  class="LargerLabel"  >A</td>
+				<td nowrap width="7%"  class="LargerLabel"  >List Price:</td>
+				<td nowrap width="10%"  class="LargerLabel"  >$649,995</td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td width="32%"></td>
+				<td width="14%"></td>
+				<td width="20%"></td>
+				<td width="14%"></td>
+				<td width="20%"></td>
+			</tr>
+			<tr>
+				<td nowrap valign="top" rowspan="17" >
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td valign="top"align="center"><IMG width="255" height="170" src="http://mediall.rapmls.com/norcalmls/listingpics/bigphoto/049/21522349.jpg?tsp=20150911001727">
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<table width="100%" cellspacing="0" cellpadding="0" border="0">
+									<tr>
+										<td nowrap width="50%"  class="LargerLabel"  align="center">
+										<A class="sBlueLinkB" href="javascript:ViewAllPictures(21522349,'S')"><B>Additional Pictures</B></A>&nbsp;&nbsp;&nbsp;&nbsp;
+										</td>
+										<td nowrap width="50%"  class="LargerLabel"  align="center">
+																				<a href="javascript:openVirtualMediaWindow(21522349);">Virtual Tour</a>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td nowrap  class="LargerLabel"  colspan="2">Single Family / Detached</td>
+				<td nowrap  class="LargerLabel"  >Orig LP:</td>
+				<td nowrap  class="LargerText"  >$680,000</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Bedrooms:</td>
+				<td nowrap  class="LargerText"  >4</td>
+				<td nowrap  class="LargerLabel"  >Selling Price:</td>
+				<td nowrap  class="LargerText"  >$</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Baths F/H:</td>
+				<td nowrap  class="LargerText"  >4 (3/1)</td>
+				<td nowrap  class="LargerLabel"  >DOM/CDOM:&nbsp;</td>
+				<td nowrap  class="LargerText"  >39/39&nbsp;</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Total Rooms:</td>
+				<td nowrap  class="LargerText"  >12</td>
+				<td nowrap  class="LargerLabel"  >Year Built:</td>
+				<td nowrap  class="LargerText"  >1989/Realist Public Rec</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Approx SF:</td>
+				<td nowrap  class="LargerText"  >2432/Realist Public Rec</td>
+				<td nowrap  class="LargerLabel"  >APN:</td>
+				<td nowrap  class="LargerText"  >0083-306-010</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Lot SF/Acres:</td>
+				<td nowrap  class="LargerText"  >7824 / 0.1796</td>
+				<td nowrap  class="LargerLabel"  >Unit/Blk/Lot:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Subdivision:</td>
+				<td nowrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerLabel"  >Zoning:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="5%" align="center">&nbsp;</td>
+							<td nowrap width="35%"><HR style="color:black;" ></td>
+							<td nowrap width="20%" align="center" class="LargerLabel"  >&nbsp; Showing &nbsp;</td>
+							<td nowrap width="35%"><HR style="color:black;" ></td>
+							<td nowrap width="5%" align="center">&nbsp;</td>
+						</tr>
+					</table>
+				</td>
+				<td nowrap class="LargerLabel">Style:</td>
+				<td nowrap class="LargerText">Traditional</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Occupancy:</td>
+				<td nowrap class="LargerText">O</td>
+				<td nowrap class="LargerLabel">Fireplace:</td>
+				<td wrap class="LargerText">Yes</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Occupant:</td>
+				<td nowrap class="LargerText">John</td>
+				<td nowrap class="LargerLabel">Pool:</td>
+				<td wrap class="LargerText">No</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Occ Phone:</td>
+				<td nowrap class="LargerText">707-246-3038</td>
+				<td nowrap class="LargerLabel">Possession:</td>
+				<td nowrap class="LargerText">Close Escrow</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Own Name:</td>
+				<td nowrap class="LargerText">John</td>
+				<td nowrap class="LargerLabel">2nd Unit on Lot:</td>
+				<td nowrap class="LargerText">No</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Own Phone:</td>
+				<td nowrap class="LargerText"></td>
+				<td nowrap class="LargerLabel">Senior:</td>
+				<td nowrap class="LargerText">No</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Showing:</td>
+				<td nowrap class="LargerText" colspan="3">Leave Card, Contact List Agent</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Cross St:</td>
+				<td nowrap class="LargerText">Rose Dr</td>
+				<td nowrap class="LargerLabel">TBrosMap:</td>
+				<td nowrap class="LargerText">,</td>
+			</tr>
+		</table>
+																																																																																																						 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="12%"  class="LargerLabel"  >Directions:</td>
+				<td wrap width="88%"  class="LargerText"  >                       Rose Dr to Morning Glory Dr</td>
+			</tr>
+		</table>
+																																																																				 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																				<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td wrap  class="LargerText" ><B>Public Remarks:&nbsp;</B>                                This fantastic property has been updated to perfection! New flooring, paint, wainscot, cabinets,granite counter-tops, toilets, water heater, roof, & gutters! In addition to the 4 bedrooms upstairs, there is a main level guest suite, wet bar, and living space makes this house perfect for a large family. The backyard workshop is a must-see!</td>
+			</tr>
+		</table>
+																																																																			 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td wrap  class="LargerText" ><B>Conf/Show Instr:</B>&nbsp;                                                                  Please calling Listing agent Aimee 707-386-0664 and allow for 15 minutes before showing. BARIES lockbox on spigot.</td>
+			</tr>
+		</table>
+																																																																		 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="13%"  class="LargerLabel"  >List Office:</td>
+				<td nowrap width="37%"  class="LargerText"  >Coldwell Banker-Benicia / DCOLD&nbsp;</td>
+				<td nowrap width="14%"  class="LargerText"  >707-745-6000</td>
+				<td nowrap width="11%"  class="LargerLabel"  >&nbsp;</td>
+				<td nowrap width="8%"  class="LargerLabel"  >Fax#:</td>
+				<td nowrap width="17%"  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >List Agent:</td>
+				<td nowrap  class="LargerText"  >Aimee Williams / D330774</td>
+				<td nowrap  class="LargerText"  >707-386-0664</td>
+				<td nowrap  class="LargerText"  ><B>Ext:</B>&nbsp;</td>
+				<td nowrap  class="LargerLabel"  >Fax#:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Co List Off:</td>
+				<td nowrap  class="LargerText" >&nbsp;</td>
+				<td nowrap  class="LargerText"  >&nbsp;</td>
+				<td nowrap  class="LargerLabel"  >&nbsp;</td>
+				<td nowrap  class="LargerLabel"  >Fax#:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Co List Agent:</td>
+				<td nowrap  class="LargerText"  >&nbsp;</td>
+				<td nowrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerText" ><B>Ext:</B>&nbsp;</FONT></td>
+				<td nowrap  class="LargerLabel"  >Fax#:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="4%"  class="LargerLabel"  >LD:&nbsp;</td>
+				<td nowrap width="13%"  class="LargerText"  >08/16/15</td>
+				<td nowrap width="5%"  class="LargerLabel"  >OMD:</td>
+				<td nowrap width="14%"  class="LargerText" >09/11/15</td>
+				<td nowrap width="4%"  class="LargerLabel"  >XD:</td>
+				<td nowrap width="13%"  class="LargerText"  ></td>
+				<td nowrap width="11%"  class="LargerLabel"  >Off Mkt Date:</td>
+				<td nowrap width="10%"  class="LargerText"  ></td>
+				<td nowrap width="5%"  class="LargerText"  ><B>CSO:</B></td>
+				<td nowrap width="21%"  class="LargerText"  >2.5</td>
+			</tr>
+		</table>
+																																																																																																				 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																													<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="2%" class="LargerLabel">District:&nbsp;</td>
+				<td nowrap width="20%" class="LargerText">Benicia Unified School District</td>
+				<td nowrap width="2%" class="LargerLabel">Elem:&nbsp;</td>
+				<td nowrap class="LargerText">&nbsp;</td>
+				<td nowrap width="2%" class="LargerLabel">Middle:&nbsp;</td>
+				<td nowrap class="LargerText">&nbsp;</td>
+				<td nowrap width="2%" class="LargerLabel">High:&nbsp;</td>
+				<td nowrap class="LargerText">&nbsp;</td>
+			</tr>
+		</table>
+																																																									 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																									<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td>
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="2%" class="LargerLabel">HOA:&nbsp;</td>
+							<td nowrap class="LargerText">No</td>
+							<td nowrap width="2%" class="LargerLabel">Amount:&nbsp;</td>
+							<td nowrap class="LargerText">$0.00 /&nbsp;</td>
+							<td nowrap width="2%" class="LargerLabel">Incl:</td>
+							<td nowrap class="LargerText"></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="2%" class="LargerLabel">Current Rent:&nbsp;</td>
+							<td nowrap class="LargerText">$0.00</td>
+							<td nowrap width="2%" class="LargerLabel">Type:&nbsp;</td>
+							<td nowrap class="LargerText">&nbsp;</td>
+							<td nowrap width="2%" class="LargerLabel">Furnished:&nbsp;</td>
+							<td nowrap class="LargerText">&nbsp;</td>
+							<td nowrap width="2%" class="LargerLabel">Com Int Dev:&nbsp;</td>
+							<td nowrap class="LargerText">No</td>
+							<td nowrap width="2%" class="LargerLabel">Planned Unit Dev:&nbsp;</td>
+							<td nowrap class="LargerText">No</td>
+						</tr>
+						<tr>
+							<td nowrap class="LargerLabel">Requirements:&nbsp;</td>
+							<td nowrap class="LargerText" colspan="5"></td>
+							<td nowrap class="LargerLabel">Min Lse Mos:&nbsp;</td>
+							<td nowrap class="LargerText">&nbsp;</td>
+							<td nowrap class="LargerLabel">Max Lse Mos:&nbsp;</td>
+							<td nowrap class="LargerText"></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+																																																																																													 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																	<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="45%"align="center" ><HR style="color:black;"></td>
+				<td nowrap width="7%" align="center"  class="LargerLabel" >&nbsp; Features &nbsp;</td>
+				<td nowrap width="48%"align="center" ><HR style="color:black;"></td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td width="13%" nowrap  class="LargerLabel"  >Views:</td>
+				<td width="87%" wrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Gar/Prkg:</td>
+				<td wrap  class="LargerText"  >2 Car</td>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Kitchen:</td>
+				<td wrap  class="LargerText"  >Breakfast Area, Cooktop Stove, Dishwasher Incl., Disposal Incl, Microwave Incl., Pantry, Remodeled, Self-Clean Oven Incl</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Heat/Cool:</td>
+				<td wrap  class="LargerText"  >Ceiling Fan(s), Central Air, Central Heat, Fireplace(s)</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Yard/Grds:</td>
+				<td wrap  class="LargerText"  >Landscaped- Front, Landscaped- Rear</td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="13%"  class="LargerLabel"  >Levels/Stories:</td>
+				<td wrap width="42%"  class="LargerText"  >2 Story</td>
+				<td nowrap width="13%"  class="LargerLabel"  >Oth Struct:</td>
+				<td wrap width="32%"  class="LargerText"  >Workshop</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Floors:</td>
+				<td wrap  class="LargerText"  >Laminate, Part Carpet, Tile, Vinyl/Linoleum</td>
+				<td nowrap  class="LargerLabel"  >Foundation:</td>
+				<td wrap  class="LargerText"  >Slab</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Exterior:</td>
+				<td nowrap  class="LargerText"  >Stucco</td>
+				<td nowrap  class="LargerLabel"  >Roof:</td>
+				<td nowrap  class="LargerText"  >Composition</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Fireplaces:</td>
+				<td wrap  class="LargerText"  >1 Fireplace, Family Room, Insert</td>
+				<td nowrap  class="LargerLabel"  >Lot Desc:</td>
+				<td wrap  class="LargerText"  >Level</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Pool Type:</td>
+				<td wrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerLabel"  >Water Source:</td>
+				<td wrap  class="LargerText"  >Water Public</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Other Rooms:</td>
+				<td wrap  class="LargerText"  >Guest Suite, Workshop</td>
+				<td nowrap  class="LargerLabel"  >Sewer/Septic:</td>
+				<td wrap  class="LargerText"  >Sewer Public</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Laundry App:</td>
+				<td wrap  class="LargerText"  >In Garage</td>
+				<td nowrap  class="LargerLabel"  >Utilities:</td>
+				<td wrap  class="LargerText"  >PG&E</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Com/Rec Ar:</td>
+				<td wrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerLabel"  >Land Use:</td>
+				<td wrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel" >Restrictions:</td>
+				<td wrap  class="LargerText" ></td>
+				<td colspan="2">
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="29%"  class="LargerLabel"  >Well Depth:</td>
+							<td nowrap width="25%"  class="LargerText"  ></td>
+							<td nowrap width="25%"  class="LargerLabel"  >Well GPM:</td>
+							<td nowrap width="21%"  class="LargerText"  ></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+																																																																																																					 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																																																																																			 <!-- Page Footer for Agent -->
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="100%" align="center"><B><DIV class='NormalText'>Presented by : Stephanie Gregory Lic: 01443147  / Country Estates, Inc Office Lic.: 01035560  Phone: 707-372-5642        <BR>Information has not been verified, is not guaranteed, and is subject to change. <BR> Copyright &copy; 2015 Bay Area Real Estate Information Services, Inc.  All rights reserved.<BR>Copyright</A> &copy;2015 <A name="trans">Rapattoni Corporation. All rights reserved.</A><BR>U.S. Patent 6,910,045 10/20/15 at 7:26pm</DIV></B></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+				<div CLASS='pagebreak' style="visibility:hidden">&nbsp;</DIV>
+	
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																																																																																			 <!-- Page Footer for Agent -->
+		
+		<table border="0" width="100%" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="100%" align="center"><DIV class='LargeText'>Agent One Page Residential</DIV></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																																																																																			 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="10%"  class="LargerLabel"  >21521980</td>
+				<td nowrap width="18%"  class="LargerLabel"  >838 Channing Cir</td>
+				<td nowrap width="17%"  class="LargerLabel"  >Benicia / D0201</td>
+				<td nowrap width="5%"  class="LargerLabel"  >CC</td>
+				<td nowrap width="7%"  class="LargerLabel"  >List Price:</td>
+				<td nowrap width="10%"  class="LargerLabel"  >$724,900</td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td width="32%"></td>
+				<td width="14%"></td>
+				<td width="20%"></td>
+				<td width="14%"></td>
+				<td width="20%"></td>
+			</tr>
+			<tr>
+				<td nowrap valign="top" rowspan="17" >
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td valign="top"align="center"><IMG width="270" height="127" src="http://mediall.rapmls.com/norcalmls/listingpics/bigphoto/080/21521980.jpg?tsp=20150906085734">
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<table width="100%" cellspacing="0" cellpadding="0" border="0">
+									<tr>
+										<td nowrap width="50%"  class="LargerLabel"  align="center">
+										<A class="sBlueLinkB" href="javascript:ViewAllPictures(21521980,'S')"><B>Additional Pictures</B></A>&nbsp;&nbsp;&nbsp;&nbsp;
+										</td>
+										<td nowrap width="50%"  class="LargerLabel"  align="center">
+																				</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td nowrap  class="LargerLabel"  colspan="2">Single Family / Detached</td>
+				<td nowrap  class="LargerLabel"  >Orig LP:</td>
+				<td nowrap  class="LargerText"  >$749,000</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Bedrooms:</td>
+				<td nowrap  class="LargerText"  >4</td>
+				<td nowrap  class="LargerLabel"  >Selling Price:</td>
+				<td nowrap  class="LargerText"  >$</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Baths F/H:</td>
+				<td nowrap  class="LargerText"  >3 (3/0)</td>
+				<td nowrap  class="LargerLabel"  >DOM/CDOM:&nbsp;</td>
+				<td nowrap  class="LargerText"  >44/44&nbsp;</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Total Rooms:</td>
+				<td nowrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerLabel"  >Year Built:</td>
+				<td nowrap  class="LargerText"  >1984/Realist Public Rec</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Approx SF:</td>
+				<td nowrap  class="LargerText"  >2631/Realist Public Rec</td>
+				<td nowrap  class="LargerLabel"  >APN:</td>
+				<td nowrap  class="LargerText"  >0083-182-320</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Lot SF/Acres:</td>
+				<td nowrap  class="LargerText"  >8712 / 0.2000</td>
+				<td nowrap  class="LargerLabel"  >Unit/Blk/Lot:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Subdivision:</td>
+				<td nowrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerLabel"  >Zoning:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="5%" align="center">&nbsp;</td>
+							<td nowrap width="35%"><HR style="color:black;" ></td>
+							<td nowrap width="20%" align="center" class="LargerLabel"  >&nbsp; Showing &nbsp;</td>
+							<td nowrap width="35%"><HR style="color:black;" ></td>
+							<td nowrap width="5%" align="center">&nbsp;</td>
+						</tr>
+					</table>
+				</td>
+				<td nowrap class="LargerLabel">Style:</td>
+				<td nowrap class="LargerText">Contemporary</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Occupancy:</td>
+				<td nowrap class="LargerText">O</td>
+				<td nowrap class="LargerLabel">Fireplace:</td>
+				<td wrap class="LargerText">Yes</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Occupant:</td>
+				<td nowrap class="LargerText">Chad and Shannon</td>
+				<td nowrap class="LargerLabel">Pool:</td>
+				<td wrap class="LargerText">No</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Occ Phone:</td>
+				<td nowrap class="LargerText">xxxxxxxxx</td>
+				<td nowrap class="LargerLabel">Possession:</td>
+				<td nowrap class="LargerText">Close Escrow</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Own Name:</td>
+				<td nowrap class="LargerText">Chad and Shannon</td>
+				<td nowrap class="LargerLabel">2nd Unit on Lot:</td>
+				<td nowrap class="LargerText">No</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Own Phone:</td>
+				<td nowrap class="LargerText">xxxxxxxx</td>
+				<td nowrap class="LargerLabel">Senior:</td>
+				<td nowrap class="LargerText">No</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Showing:</td>
+				<td nowrap class="LargerText" colspan="3">BAREIS Lockbox, Leave Card, Contact List Agent, See Confidential Rmk</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Cross St:</td>
+				<td nowrap class="LargerText">Oxford Way</td>
+				<td nowrap class="LargerLabel">TBrosMap:</td>
+				<td nowrap class="LargerText">,</td>
+			</tr>
+		</table>
+																																																																																																						 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="12%"  class="LargerLabel"  >Directions:</td>
+				<td wrap width="88%"  class="LargerText"  >                       Rose Drive to lower Oxford Way, left on Channing Circle</td>
+			</tr>
+		</table>
+																																																																				 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																				<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td wrap  class="LargerText" ><B>Public Remarks:&nbsp;</B>                                Fabulous home in prestigious neighborhood - extensively added onto & customized/upgraded. Water views from both levels. Original MB down, with a huge newer MB suite upstairs w/Jacuzzi tub. Andersen doors and windows throughout. Completely remodeled kitchen w/granite counters, tiled floor, cabinets with antique finish, walk in pantry. Hickory wood flooring, office/bonus room with views - private yard backs to open space/views. Absolutely stunning!</td>
+			</tr>
+		</table>
+																																																																			 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td wrap  class="LargerText" ><B>Conf/Show Instr:</B>&nbsp;                                                                  lockbox on faucet in front of house. No showing until open house on 9/6 from 1:00 - 4:00. Please allow a 2-hour notice - small children. Offers to be reviewed on 9/10 at noon.</td>
+			</tr>
+		</table>
+																																																																		 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="13%"  class="LargerLabel"  >List Office:</td>
+				<td nowrap width="37%"  class="LargerText"  >BHHS Drysdale Properties / DPRUB&nbsp;</td>
+				<td nowrap width="14%"  class="LargerText"  >707-745-5400</td>
+				<td nowrap width="11%"  class="LargerLabel"  >&nbsp;</td>
+				<td nowrap width="8%"  class="LargerLabel"  >Fax#:</td>
+				<td nowrap width="17%"  class="LargerText"  >707-747-5643</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >List Agent:</td>
+				<td nowrap  class="LargerText"  >Stephen Ridge / D0438</td>
+				<td nowrap  class="LargerText"  >707-315-2753</td>
+				<td nowrap  class="LargerText"  ><B>Ext:</B>&nbsp;</td>
+				<td nowrap  class="LargerLabel"  >Fax#:</td>
+				<td nowrap  class="LargerText"  >707-747-5643</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Co List Off:</td>
+				<td nowrap  class="LargerText" >&nbsp;</td>
+				<td nowrap  class="LargerText"  >&nbsp;</td>
+				<td nowrap  class="LargerLabel"  >&nbsp;</td>
+				<td nowrap  class="LargerLabel"  >Fax#:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Co List Agent:</td>
+				<td nowrap  class="LargerText"  >&nbsp;</td>
+				<td nowrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerText" ><B>Ext:</B>&nbsp;</FONT></td>
+				<td nowrap  class="LargerLabel"  >Fax#:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="4%"  class="LargerLabel"  >LD:&nbsp;</td>
+				<td nowrap width="13%"  class="LargerText"  >09/06/15</td>
+				<td nowrap width="5%"  class="LargerLabel"  >OMD:</td>
+				<td nowrap width="14%"  class="LargerText" >09/06/15</td>
+				<td nowrap width="4%"  class="LargerLabel"  >XD:</td>
+				<td nowrap width="13%"  class="LargerText"  ></td>
+				<td nowrap width="11%"  class="LargerLabel"  >Off Mkt Date:</td>
+				<td nowrap width="10%"  class="LargerText"  ></td>
+				<td nowrap width="5%"  class="LargerText"  ><B>CSO:</B></td>
+				<td nowrap width="21%"  class="LargerText"  >2.5%</td>
+			</tr>
+		</table>
+																																																																																																				 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																													<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="2%" class="LargerLabel">District:&nbsp;</td>
+				<td nowrap width="20%" class="LargerText">Benicia Unified</td>
+				<td nowrap width="2%" class="LargerLabel">Elem:&nbsp;</td>
+				<td nowrap class="LargerText">&nbsp;</td>
+				<td nowrap width="2%" class="LargerLabel">Middle:&nbsp;</td>
+				<td nowrap class="LargerText">&nbsp;</td>
+				<td nowrap width="2%" class="LargerLabel">High:&nbsp;</td>
+				<td nowrap class="LargerText">&nbsp;</td>
+			</tr>
+		</table>
+																																																									 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																									<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td>
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="2%" class="LargerLabel">HOA:&nbsp;</td>
+							<td nowrap class="LargerText">No</td>
+							<td nowrap width="2%" class="LargerLabel">Amount:&nbsp;</td>
+							<td nowrap class="LargerText">$0.00 /&nbsp;</td>
+							<td nowrap width="2%" class="LargerLabel">Incl:</td>
+							<td nowrap class="LargerText"></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="2%" class="LargerLabel">Current Rent:&nbsp;</td>
+							<td nowrap class="LargerText">$0.00</td>
+							<td nowrap width="2%" class="LargerLabel">Type:&nbsp;</td>
+							<td nowrap class="LargerText">&nbsp;</td>
+							<td nowrap width="2%" class="LargerLabel">Furnished:&nbsp;</td>
+							<td nowrap class="LargerText">&nbsp;</td>
+							<td nowrap width="2%" class="LargerLabel">Com Int Dev:&nbsp;</td>
+							<td nowrap class="LargerText">No</td>
+							<td nowrap width="2%" class="LargerLabel">Planned Unit Dev:&nbsp;</td>
+							<td nowrap class="LargerText">No</td>
+						</tr>
+						<tr>
+							<td nowrap class="LargerLabel">Requirements:&nbsp;</td>
+							<td nowrap class="LargerText" colspan="5"></td>
+							<td nowrap class="LargerLabel">Min Lse Mos:&nbsp;</td>
+							<td nowrap class="LargerText">&nbsp;</td>
+							<td nowrap class="LargerLabel">Max Lse Mos:&nbsp;</td>
+							<td nowrap class="LargerText"></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+																																																																																													 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																	<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="45%"align="center" ><HR style="color:black;"></td>
+				<td nowrap width="7%" align="center"  class="LargerLabel" >&nbsp; Features &nbsp;</td>
+				<td nowrap width="48%"align="center" ><HR style="color:black;"></td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td width="13%" nowrap  class="LargerLabel"  >Views:</td>
+				<td width="87%" wrap  class="LargerText"  >Bay, Bridges, Greenbelt, Hills, Panoramic, Water</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Gar/Prkg:</td>
+				<td wrap  class="LargerText"  >2 Car, Attached</td>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Kitchen:</td>
+				<td wrap  class="LargerText"  >220 V Wiring, Cntr Stone Tile, Dishwasher Incl., Disposal Incl, Electric Range Incl., Microwave Incl., Remodeled</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Heat/Cool:</td>
+				<td wrap  class="LargerText"  >Central Heat</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Yard/Grds:</td>
+				<td wrap  class="LargerText"  >Landscaped- Front, Landscaped- Rear, Patio(s), Sprink-Automatic</td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="13%"  class="LargerLabel"  >Levels/Stories:</td>
+				<td wrap width="42%"  class="LargerText"  >2 Story</td>
+				<td nowrap width="13%"  class="LargerLabel"  >Oth Struct:</td>
+				<td wrap width="32%"  class="LargerText"  >None</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Floors:</td>
+				<td wrap  class="LargerText"  >Hardwood, Tile, W/W Carpet</td>
+				<td nowrap  class="LargerLabel"  >Foundation:</td>
+				<td wrap  class="LargerText"  >Slab</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Exterior:</td>
+				<td nowrap  class="LargerText"  >Stucco</td>
+				<td nowrap  class="LargerLabel"  >Roof:</td>
+				<td nowrap  class="LargerText"  >Composition</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Fireplaces:</td>
+				<td wrap  class="LargerText"  >Living Room, Wood Burning</td>
+				<td nowrap  class="LargerLabel"  >Lot Desc:</td>
+				<td wrap  class="LargerText"  >Level, Regular</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Pool Type:</td>
+				<td wrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerLabel"  >Water Source:</td>
+				<td wrap  class="LargerText"  >Water Public</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Other Rooms:</td>
+				<td wrap  class="LargerText"  >Den/Study, Guest Suite</td>
+				<td nowrap  class="LargerLabel"  >Sewer/Septic:</td>
+				<td wrap  class="LargerText"  >Sewer Public</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Laundry App:</td>
+				<td wrap  class="LargerText"  >220 V, Hookups only, In Garage</td>
+				<td nowrap  class="LargerLabel"  >Utilities:</td>
+				<td wrap  class="LargerText"  >City, Gas Water Heater, PG&E</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Com/Rec Ar:</td>
+				<td wrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerLabel"  >Land Use:</td>
+				<td wrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel" >Restrictions:</td>
+				<td wrap  class="LargerText" ></td>
+				<td colspan="2">
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="29%"  class="LargerLabel"  >Well Depth:</td>
+							<td nowrap width="25%"  class="LargerText"  ></td>
+							<td nowrap width="25%"  class="LargerLabel"  >Well GPM:</td>
+							<td nowrap width="21%"  class="LargerText"  ></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+																																																																																																					 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																																																																																			 <!-- Page Footer for Agent -->
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="100%" align="center"><B><DIV class='NormalText'>Presented by : Stephanie Gregory Lic: 01443147  / Country Estates, Inc Office Lic.: 01035560  Phone: 707-372-5642        <BR>Information has not been verified, is not guaranteed, and is subject to change. <BR> Copyright &copy; 2015 Bay Area Real Estate Information Services, Inc.  All rights reserved.<BR>Copyright</A> &copy;2015 <A name="trans">Rapattoni Corporation. All rights reserved.</A><BR>U.S. Patent 6,910,045 10/20/15 at 7:26pm</DIV></B></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+				<div CLASS='pagebreak' style="visibility:hidden">&nbsp;</DIV>
+	
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																																																																																			 <!-- Page Footer for Agent -->
+		
+		<table border="0" width="100%" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="100%" align="center"><DIV class='LargeText'>Agent One Page Residential</DIV></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																																																																																			 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="10%"  class="LargerLabel"  >21516646</td>
+				<td nowrap width="18%"  class="LargerLabel"  >804 Oxford Way</td>
+				<td nowrap width="17%"  class="LargerLabel"  >Benicia / D0201</td>
+				<td nowrap width="5%"  class="LargerLabel"  >S</td>
+				<td nowrap width="7%"  class="LargerLabel"  >List Price:</td>
+				<td nowrap width="10%"  class="LargerLabel"  >$625,000</td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td width="32%"></td>
+				<td width="14%"></td>
+				<td width="20%"></td>
+				<td width="14%"></td>
+				<td width="20%"></td>
+			</tr>
+			<tr>
+				<td nowrap valign="top" rowspan="17" >
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td valign="top"align="center"><IMG width="270" height="152" src="http://mediall.rapmls.com/norcalmls/listingpics/bigphoto/046/21516646.jpg?tsp=20150709133829">
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<table width="100%" cellspacing="0" cellpadding="0" border="0">
+									<tr>
+										<td nowrap width="50%"  class="LargerLabel"  align="center">
+										<A class="sBlueLinkB" href="javascript:ViewAllPictures(21516646,'S')"><B>Additional Pictures</B></A>&nbsp;&nbsp;&nbsp;&nbsp;
+										</td>
+										<td nowrap width="50%"  class="LargerLabel"  align="center">
+																				</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td nowrap  class="LargerLabel"  colspan="2">Single Family / Detached</td>
+				<td nowrap  class="LargerLabel"  >Orig LP:</td>
+				<td nowrap  class="LargerText"  >$625,000</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Bedrooms:</td>
+				<td nowrap  class="LargerText"  >4</td>
+				<td nowrap  class="LargerLabel"  >Selling Price:</td>
+				<td nowrap  class="LargerText"  >$635,000</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Baths F/H:</td>
+				<td nowrap  class="LargerText"  >3 (3/0)</td>
+				<td nowrap  class="LargerLabel"  >DOM/CDOM:&nbsp;</td>
+				<td nowrap  class="LargerText"  >36/36&nbsp;</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Total Rooms:</td>
+				<td nowrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerLabel"  >Year Built:</td>
+				<td nowrap  class="LargerText"  >1988/Realist Public Rec</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Approx SF:</td>
+				<td nowrap  class="LargerText"  >2649/Realist Public Rec</td>
+				<td nowrap  class="LargerLabel"  >APN:</td>
+				<td nowrap  class="LargerText"  >0083-101-010</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Lot SF/Acres:</td>
+				<td nowrap  class="LargerText"  >  10616 / 0.2437</td>
+				<td nowrap  class="LargerLabel"  >Unit/Blk/Lot:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Subdivision:</td>
+				<td nowrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerLabel"  >Zoning:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="5%" align="center">&nbsp;</td>
+							<td nowrap width="35%"><HR style="color:black;" ></td>
+							<td nowrap width="20%" align="center" class="LargerLabel"  >&nbsp; Showing &nbsp;</td>
+							<td nowrap width="35%"><HR style="color:black;" ></td>
+							<td nowrap width="5%" align="center">&nbsp;</td>
+						</tr>
+					</table>
+				</td>
+				<td nowrap class="LargerLabel">Style:</td>
+				<td nowrap class="LargerText">Contemporary</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Occupancy:</td>
+				<td nowrap class="LargerText">V</td>
+				<td nowrap class="LargerLabel">Fireplace:</td>
+				<td wrap class="LargerText">Yes</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Occupant:</td>
+				<td nowrap class="LargerText"></td>
+				<td nowrap class="LargerLabel">Pool:</td>
+				<td wrap class="LargerText">No</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Occ Phone:</td>
+				<td nowrap class="LargerText"></td>
+				<td nowrap class="LargerLabel">Possession:</td>
+				<td nowrap class="LargerText">Close Escrow</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Own Name:</td>
+				<td nowrap class="LargerText"></td>
+				<td nowrap class="LargerLabel">2nd Unit on Lot:</td>
+				<td nowrap class="LargerText">No</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Own Phone:</td>
+				<td nowrap class="LargerText"></td>
+				<td nowrap class="LargerLabel">Senior:</td>
+				<td nowrap class="LargerText">No</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Showing:</td>
+				<td nowrap class="LargerText" colspan="3">Go Directly, BAREIS Lockbox</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Cross St:</td>
+				<td nowrap class="LargerText">Rose</td>
+				<td nowrap class="LargerLabel">TBrosMap:</td>
+				<td nowrap class="LargerText">,</td>
+			</tr>
+		</table>
+																																																																																																						 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="12%"  class="LargerLabel"  >Directions:</td>
+				<td wrap width="88%"  class="LargerText"  >                       Rose Dr to Oxford</td>
+			</tr>
+		</table>
+																																																																				 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																				<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td wrap  class="LargerText" ><B>Public Remarks:&nbsp;</B>                                Bright open floor plan with stunning remodeled kitchen with built in stainless steel fridge and granite counters. This tri-level has 2 master suites! Fresh paint, flooring, plantation shutters in living and dining room and a huge yard just waiting for you!</td>
+			</tr>
+		</table>
+																																																																			 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td wrap  class="LargerText" ><B>Conf/Show Instr:</B>&nbsp;                                                                  Lockbox will be placed by tomorrow at 11am. Vacant go show but please lock up tight, sellers check on property regularly. Sellers have never lived in property, Trash compactor does not work and dishwasher may not, AS IS.  Offers reviewed as received please Email to julie.watson@kappelgateway.com text or call with any questions 707-330-9078</td>
+			</tr>
+		</table>
+																																																																		 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="13%"  class="LargerLabel"  >List Office:</td>
+				<td nowrap width="37%"  class="LargerText"  >Coldwell Banker Kappel Gateway Realty / 7C604&nbsp;</td>
+				<td nowrap width="14%"  class="LargerText"  >707-864-0205</td>
+				<td nowrap width="11%"  class="LargerLabel"  >&nbsp;</td>
+				<td nowrap width="8%"  class="LargerLabel"  >Fax#:</td>
+				<td nowrap width="17%"  class="LargerText"  >707-864-1852</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >List Agent:</td>
+				<td nowrap  class="LargerText"  >Julie Watson / C332492</td>
+				<td nowrap  class="LargerText"  >707-330-9078</td>
+				<td nowrap  class="LargerText"  ><B>Ext:</B>&nbsp;</td>
+				<td nowrap  class="LargerLabel"  >Fax#:</td>
+				<td nowrap  class="LargerText"  >707-864-1852</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Co List Off:</td>
+				<td nowrap  class="LargerText" >&nbsp;</td>
+				<td nowrap  class="LargerText"  >&nbsp;</td>
+				<td nowrap  class="LargerLabel"  >&nbsp;</td>
+				<td nowrap  class="LargerLabel"  >Fax#:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Co List Agent:</td>
+				<td nowrap  class="LargerText"  >&nbsp;</td>
+				<td nowrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerText" ><B>Ext:</B>&nbsp;</FONT></td>
+				<td nowrap  class="LargerLabel"  >Fax#:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="4%"  class="LargerLabel"  >LD:&nbsp;</td>
+				<td nowrap width="13%"  class="LargerText"  >07/07/15</td>
+				<td nowrap width="5%"  class="LargerLabel"  >OMD:</td>
+				<td nowrap width="14%"  class="LargerText" >07/08/15</td>
+				<td nowrap width="4%"  class="LargerLabel"  >XD:</td>
+				<td nowrap width="13%"  class="LargerText"  >01/07/16</td>
+				<td nowrap width="11%"  class="LargerLabel"  >Off Mkt Date:</td>
+				<td nowrap width="10%"  class="LargerText"  ></td>
+				<td nowrap width="5%"  class="LargerText"  ><B>CSO:</B></td>
+				<td nowrap width="21%"  class="LargerText"  >3.0</td>
+			</tr>
+		</table>
+																																																																																																				 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																								<table width="100%" cellspacing="0" cellpadding="0" border="0">
+				<tr>
+					<td width="2%"></td>
+					<td width="10%"></td>
+					<td width="9%"></td>
+					<td width="33%"></td>
+					<td width="10%"></td>
+					<td width="21%"></td>
+				</tr>
+				<tr>
+					<td nowrap  class="LargerLabel"  >Contingent Date:&nbsp;</td>
+					<td nowrap  class="LargerText"  >07/12/15</td>
+					<td nowrap  class="LargerLabel"  >COE Date:&nbsp;</td>
+					<td nowrap  class="LargerText" >08/20/15</td>
+					<td nowrap  class="LargerLabel"  >Selling Price:&nbsp;</td>
+					<td nowrap  class="LargerText"  >$635,000</td>
+				</tr>
+				<tr>
+					<td nowrap  class="LargerLabel"  >Pending Date:&nbsp;</td>
+					<td nowrap  class="LargerText"  >08/13/15</td>
+					<td nowrap  class="LargerLabel"  >Terms&nbsp;</td>
+					<td nowrap  class="LargerText" >Conventional</td>
+					<td nowrap  class="LargerLabel"  >DOM/CDOM:&nbsp;&nbsp;</td>
+					<td nowrap  class="LargerText"  >36/36&nbsp;</td>
+				</tr>
+				<tr>
+					<td nowrap class="LargerLabel">Slr Consessions:&nbsp;</td>
+					<td class="LargerText">No&nbsp;</td>
+					<td nowrap  class="LargerLabel"  >Sold Remarks:&nbsp;</td>
+					<td wrap  class="LargerText" align="left" colspan="5"></td>
+				</tr>
+			</table>
+			<table width="100%" cellspacing="0" cellpadding="0" border="0">
+				<tr>
+
+					<td nowrap width="2%" class="LargerLabel"  >Sold By:&nbsp;</td>
+					<td nowrap width="41%" class="LargerText" >Coldwell Banker-Beni / DCOLD</td>
+					<td nowrap width="10%" class="LargerLabel"  >Agent:&nbsp;</td>
+					<td nowrap width="36%" class="LargerText" >Rod Herman / D0831</td>
+				</tr>
+				<tr>
+					<td nowrap  class="LargerLabel"  >Co Sold By:&nbsp;</td>
+					<td nowrap  class="LargerText" ></td>
+					<td nowrap  class="LargerLabel"  >Co Agent:&nbsp;</td>
+					<td nowrap  class="LargerText"  ></td>
+				</tr>
+			</table>
+																																																																																															 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																									<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td>
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="2%" class="LargerLabel">HOA:&nbsp;</td>
+							<td nowrap class="LargerText">No</td>
+							<td nowrap width="2%" class="LargerLabel">Amount:&nbsp;</td>
+							<td nowrap class="LargerText">$0.00 /&nbsp;</td>
+							<td nowrap width="2%" class="LargerLabel">Incl:</td>
+							<td nowrap class="LargerText"></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="2%" class="LargerLabel">Current Rent:&nbsp;</td>
+							<td nowrap class="LargerText">$0.00</td>
+							<td nowrap width="2%" class="LargerLabel">Type:&nbsp;</td>
+							<td nowrap class="LargerText">&nbsp;</td>
+							<td nowrap width="2%" class="LargerLabel">Furnished:&nbsp;</td>
+							<td nowrap class="LargerText">&nbsp;</td>
+							<td nowrap width="2%" class="LargerLabel">Com Int Dev:&nbsp;</td>
+							<td nowrap class="LargerText">No</td>
+							<td nowrap width="2%" class="LargerLabel">Planned Unit Dev:&nbsp;</td>
+							<td nowrap class="LargerText">No</td>
+						</tr>
+						<tr>
+							<td nowrap class="LargerLabel">Requirements:&nbsp;</td>
+							<td nowrap class="LargerText" colspan="5"></td>
+							<td nowrap class="LargerLabel">Min Lse Mos:&nbsp;</td>
+							<td nowrap class="LargerText">&nbsp;</td>
+							<td nowrap class="LargerLabel">Max Lse Mos:&nbsp;</td>
+							<td nowrap class="LargerText"></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+																																																																																													 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																	<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="45%"align="center" ><HR style="color:black;"></td>
+				<td nowrap width="7%" align="center"  class="LargerLabel" >&nbsp; Features &nbsp;</td>
+				<td nowrap width="48%"align="center" ><HR style="color:black;"></td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td width="13%" nowrap  class="LargerLabel"  >Views:</td>
+				<td width="87%" wrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Gar/Prkg:</td>
+				<td wrap  class="LargerText"  >3 Car</td>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Kitchen:</td>
+				<td wrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Heat/Cool:</td>
+				<td wrap  class="LargerText"  >Central Air, Central Heat</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Yard/Grds:</td>
+				<td wrap  class="LargerText"  ></td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="13%"  class="LargerLabel"  >Levels/Stories:</td>
+				<td wrap width="42%"  class="LargerText"  >Tri Level</td>
+				<td nowrap width="13%"  class="LargerLabel"  >Oth Struct:</td>
+				<td wrap width="32%"  class="LargerText"  >Shed(s)</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Floors:</td>
+				<td wrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerLabel"  >Foundation:</td>
+				<td wrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Exterior:</td>
+				<td nowrap  class="LargerText"  >Stucco</td>
+				<td nowrap  class="LargerLabel"  >Roof:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Fireplaces:</td>
+				<td wrap  class="LargerText"  >1 Fireplace, Family Room, Two-Way</td>
+				<td nowrap  class="LargerLabel"  >Lot Desc:</td>
+				<td wrap  class="LargerText"  >Irregular</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Pool Type:</td>
+				<td wrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerLabel"  >Water Source:</td>
+				<td wrap  class="LargerText"  >Water Public</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Other Rooms:</td>
+				<td wrap  class="LargerText"  >None</td>
+				<td nowrap  class="LargerLabel"  >Sewer/Septic:</td>
+				<td wrap  class="LargerText"  >Sewer Public</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Laundry App:</td>
+				<td wrap  class="LargerText"  >Hookups only</td>
+				<td nowrap  class="LargerLabel"  >Utilities:</td>
+				<td wrap  class="LargerText"  >PG&E</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Com/Rec Ar:</td>
+				<td wrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerLabel"  >Land Use:</td>
+				<td wrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel" >Restrictions:</td>
+				<td wrap  class="LargerText" ></td>
+				<td colspan="2">
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="29%"  class="LargerLabel"  >Well Depth:</td>
+							<td nowrap width="25%"  class="LargerText"  ></td>
+							<td nowrap width="25%"  class="LargerLabel"  >Well GPM:</td>
+							<td nowrap width="21%"  class="LargerText"  ></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+																																																																																																					 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																																																																																			 <!-- Page Footer for Agent -->
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="100%" align="center"><B><DIV class='NormalText'>Presented by : Stephanie Gregory Lic: 01443147  / Country Estates, Inc Office Lic.: 01035560  Phone: 707-372-5642        <BR>Information has not been verified, is not guaranteed, and is subject to change. <BR> Copyright &copy; 2015 Bay Area Real Estate Information Services, Inc.  All rights reserved.<BR>Copyright</A> &copy;2015 <A name="trans">Rapattoni Corporation. All rights reserved.</A><BR>U.S. Patent 6,910,045 10/20/15 at 7:26pm</DIV></B></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+				<div CLASS='pagebreak' style="visibility:hidden">&nbsp;</DIV>
+	
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																																																																																			 <!-- Page Footer for Agent -->
+		
+		<table border="0" width="100%" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="100%" align="center"><DIV class='LargeText'>Agent One Page Residential</DIV></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																																																																																			 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="10%"  class="LargerLabel"  >21509977</td>
+				<td nowrap width="18%"  class="LargerLabel"  >418 York Dr</td>
+				<td nowrap width="17%"  class="LargerLabel"  >Benicia / D0201</td>
+				<td nowrap width="5%"  class="LargerLabel"  >S</td>
+				<td nowrap width="7%"  class="LargerLabel"  >List Price:</td>
+				<td nowrap width="10%"  class="LargerLabel"  >$649,800</td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td width="32%"></td>
+				<td width="14%"></td>
+				<td width="20%"></td>
+				<td width="14%"></td>
+				<td width="20%"></td>
+			</tr>
+			<tr>
+				<td nowrap valign="top" rowspan="17" >
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td valign="top"align="center"><IMG width="246" height="170" src="http://mediall.rapmls.com/norcalmls/listingpics/bigphoto/077/21509977.jpg?tsp=20150429002356">
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<table width="100%" cellspacing="0" cellpadding="0" border="0">
+									<tr>
+										<td nowrap width="50%"  class="LargerLabel"  align="center">
+										<A class="sBlueLinkB" href="javascript:ViewAllPictures(21509977,'S')"><B>Additional Pictures</B></A>&nbsp;&nbsp;&nbsp;&nbsp;
+										</td>
+										<td nowrap width="50%"  class="LargerLabel"  align="center">
+																				<a href="javascript:openVirtualMediaWindow(21509977);">Virtual Tour</a>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td nowrap  class="LargerLabel"  colspan="2">Single Family / Detached</td>
+				<td nowrap  class="LargerLabel"  >Orig LP:</td>
+				<td nowrap  class="LargerText"  >$649,800</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Bedrooms:</td>
+				<td nowrap  class="LargerText"  >4</td>
+				<td nowrap  class="LargerLabel"  >Selling Price:</td>
+				<td nowrap  class="LargerText"  >$654,000</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Baths F/H:</td>
+				<td nowrap  class="LargerText"  >3 (3/0)</td>
+				<td nowrap  class="LargerLabel"  >DOM/CDOM:&nbsp;</td>
+				<td nowrap  class="LargerText"  >14/14&nbsp;</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Total Rooms:</td>
+				<td nowrap  class="LargerText"  >8</td>
+				<td nowrap  class="LargerLabel"  >Year Built:</td>
+				<td nowrap  class="LargerText"  >1977/Realist Public Rec</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Approx SF:</td>
+				<td nowrap  class="LargerText"  >2460/Appraiser</td>
+				<td nowrap  class="LargerLabel"  >APN:</td>
+				<td nowrap  class="LargerText"  >0086-202-050</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Lot SF/Acres:</td>
+				<td nowrap  class="LargerText"  >   9148 / 0.2100</td>
+				<td nowrap  class="LargerLabel"  >Unit/Blk/Lot:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Subdivision:</td>
+				<td nowrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerLabel"  >Zoning:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="5%" align="center">&nbsp;</td>
+							<td nowrap width="35%"><HR style="color:black;" ></td>
+							<td nowrap width="20%" align="center" class="LargerLabel"  >&nbsp; Showing &nbsp;</td>
+							<td nowrap width="35%"><HR style="color:black;" ></td>
+							<td nowrap width="5%" align="center">&nbsp;</td>
+						</tr>
+					</table>
+				</td>
+				<td nowrap class="LargerLabel">Style:</td>
+				<td nowrap class="LargerText">Contemporary</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Occupancy:</td>
+				<td nowrap class="LargerText">O</td>
+				<td nowrap class="LargerLabel">Fireplace:</td>
+				<td wrap class="LargerText">Yes</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Occupant:</td>
+				<td nowrap class="LargerText">Owners</td>
+				<td nowrap class="LargerLabel">Pool:</td>
+				<td wrap class="LargerText">Yes</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Occ Phone:</td>
+				<td nowrap class="LargerText">123-123-1234</td>
+				<td nowrap class="LargerLabel">Possession:</td>
+				<td nowrap class="LargerText">Negotiable</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Own Name:</td>
+				<td nowrap class="LargerText"></td>
+				<td nowrap class="LargerLabel">2nd Unit on Lot:</td>
+				<td nowrap class="LargerText">No</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Own Phone:</td>
+				<td nowrap class="LargerText"></td>
+				<td nowrap class="LargerLabel">Senior:</td>
+				<td nowrap class="LargerText">No</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Showing:</td>
+				<td nowrap class="LargerText" colspan="3">BAREIS Lockbox, Contact Owner, See Confidential Rmk, Restricted Hours, Text Client</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Cross St:</td>
+				<td nowrap class="LargerText">Ofarrell drive</td>
+				<td nowrap class="LargerLabel">TBrosMap:</td>
+				<td nowrap class="LargerText">,</td>
+			</tr>
+		</table>
+																																																																																																						 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="12%"  class="LargerLabel"  >Directions:</td>
+				<td wrap width="88%"  class="LargerText"  >                       780 to Southhampton Road to Ofarrell Drive to York Drive.</td>
+			</tr>
+		</table>
+																																																																				 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																				<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td wrap  class="LargerText" ><B>Public Remarks:&nbsp;</B>                                Almost everything totally remodeled. Open Modern Floorplan. Spacious Backyard with Your Own Oversized Swimming Pool & Bocce Ball Court! Granite Kitchen Counters & New Cabinets. Stainless Steel Appliances Included. Recessed Lighting Throughout. Spacious Master Suite with dual French Doors opening to Deck. Downstairs 4th Bedroom / Man-Cave. You're gonna love this home! Come see it!</td>
+			</tr>
+		</table>
+																																																																			 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td wrap  class="LargerText" ><B>Conf/Show Instr:</B>&nbsp;</td>
+			</tr>
+		</table>
+																																																																		 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="13%"  class="LargerLabel"  >List Office:</td>
+				<td nowrap width="37%"  class="LargerText"  >California Pacific Brokers / 25094&nbsp;</td>
+				<td nowrap width="14%"  class="LargerText"  >510-270-2201</td>
+				<td nowrap width="11%"  class="LargerLabel"  >&nbsp;</td>
+				<td nowrap width="8%"  class="LargerLabel"  >Fax#:</td>
+				<td nowrap width="17%"  class="LargerText"  >510-217-3643</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >List Agent:</td>
+				<td nowrap  class="LargerText"  >Michael Koenig / EB29238</td>
+				<td nowrap  class="LargerText"  >510-270-2201</td>
+				<td nowrap  class="LargerText"  ><B>Ext:</B>&nbsp;</td>
+				<td nowrap  class="LargerLabel"  >Fax#:</td>
+				<td nowrap  class="LargerText"  >510-217-3643</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Co List Off:</td>
+				<td nowrap  class="LargerText" >&nbsp;</td>
+				<td nowrap  class="LargerText"  >&nbsp;</td>
+				<td nowrap  class="LargerLabel"  >&nbsp;</td>
+				<td nowrap  class="LargerLabel"  >Fax#:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Co List Agent:</td>
+				<td nowrap  class="LargerText"  >&nbsp;</td>
+				<td nowrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerText" ><B>Ext:</B>&nbsp;</FONT></td>
+				<td nowrap  class="LargerLabel"  >Fax#:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="4%"  class="LargerLabel"  >LD:&nbsp;</td>
+				<td nowrap width="13%"  class="LargerText"  >04/28/15</td>
+				<td nowrap width="5%"  class="LargerLabel"  >OMD:</td>
+				<td nowrap width="14%"  class="LargerText" >04/29/15</td>
+				<td nowrap width="4%"  class="LargerLabel"  >XD:</td>
+				<td nowrap width="13%"  class="LargerText"  >08/31/15</td>
+				<td nowrap width="11%"  class="LargerLabel"  >Off Mkt Date:</td>
+				<td nowrap width="10%"  class="LargerText"  ></td>
+				<td nowrap width="5%"  class="LargerText"  ><B>CSO:</B></td>
+				<td nowrap width="21%"  class="LargerText"  >2.5</td>
+			</tr>
+		</table>
+																																																																																																				 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																								<table width="100%" cellspacing="0" cellpadding="0" border="0">
+				<tr>
+					<td width="2%"></td>
+					<td width="10%"></td>
+					<td width="9%"></td>
+					<td width="33%"></td>
+					<td width="10%"></td>
+					<td width="21%"></td>
+				</tr>
+				<tr>
+					<td nowrap  class="LargerLabel"  >Contingent Date:&nbsp;</td>
+					<td nowrap  class="LargerText"  ></td>
+					<td nowrap  class="LargerLabel"  >COE Date:&nbsp;</td>
+					<td nowrap  class="LargerText" >06/30/15</td>
+					<td nowrap  class="LargerLabel"  >Selling Price:&nbsp;</td>
+					<td nowrap  class="LargerText"  >$654,000</td>
+				</tr>
+				<tr>
+					<td nowrap  class="LargerLabel"  >Pending Date:&nbsp;</td>
+					<td nowrap  class="LargerText"  >05/13/15</td>
+					<td nowrap  class="LargerLabel"  >Terms&nbsp;</td>
+					<td nowrap  class="LargerText" >Conventional</td>
+					<td nowrap  class="LargerLabel"  >DOM/CDOM:&nbsp;&nbsp;</td>
+					<td nowrap  class="LargerText"  >14/14&nbsp;</td>
+				</tr>
+				<tr>
+					<td nowrap class="LargerLabel">Slr Consessions:&nbsp;</td>
+					<td class="LargerText">Yes&nbsp;</td>
+					<td nowrap  class="LargerLabel"  >Sold Remarks:&nbsp;</td>
+					<td wrap  class="LargerText" align="left" colspan="5"></td>
+				</tr>
+			</table>
+			<table width="100%" cellspacing="0" cellpadding="0" border="0">
+				<tr>
+
+					<td nowrap width="2%" class="LargerLabel"  >Sold By:&nbsp;</td>
+					<td nowrap width="41%" class="LargerText" >California Pacific B / 25094</td>
+					<td nowrap width="10%" class="LargerLabel"  >Agent:&nbsp;</td>
+					<td nowrap width="36%" class="LargerText" >Michael Koenig / EB29238</td>
+				</tr>
+				<tr>
+					<td nowrap  class="LargerLabel"  >Co Sold By:&nbsp;</td>
+					<td nowrap  class="LargerText" ></td>
+					<td nowrap  class="LargerLabel"  >Co Agent:&nbsp;</td>
+					<td nowrap  class="LargerText"  ></td>
+				</tr>
+			</table>
+																																																																																															 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																									<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td>
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="2%" class="LargerLabel">HOA:&nbsp;</td>
+							<td nowrap class="LargerText">No</td>
+							<td nowrap width="2%" class="LargerLabel">Amount:&nbsp;</td>
+							<td nowrap class="LargerText">$0.00 /&nbsp;</td>
+							<td nowrap width="2%" class="LargerLabel">Incl:</td>
+							<td nowrap class="LargerText"></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="2%" class="LargerLabel">Current Rent:&nbsp;</td>
+							<td nowrap class="LargerText">$0.00</td>
+							<td nowrap width="2%" class="LargerLabel">Type:&nbsp;</td>
+							<td nowrap class="LargerText">&nbsp;</td>
+							<td nowrap width="2%" class="LargerLabel">Furnished:&nbsp;</td>
+							<td nowrap class="LargerText">None&nbsp;</td>
+							<td nowrap width="2%" class="LargerLabel">Com Int Dev:&nbsp;</td>
+							<td nowrap class="LargerText">No</td>
+							<td nowrap width="2%" class="LargerLabel">Planned Unit Dev:&nbsp;</td>
+							<td nowrap class="LargerText">No</td>
+						</tr>
+						<tr>
+							<td nowrap class="LargerLabel">Requirements:&nbsp;</td>
+							<td nowrap class="LargerText" colspan="5"></td>
+							<td nowrap class="LargerLabel">Min Lse Mos:&nbsp;</td>
+							<td nowrap class="LargerText">&nbsp;</td>
+							<td nowrap class="LargerLabel">Max Lse Mos:&nbsp;</td>
+							<td nowrap class="LargerText"></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+																																																																																													 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																	<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="45%"align="center" ><HR style="color:black;"></td>
+				<td nowrap width="7%" align="center"  class="LargerLabel" >&nbsp; Features &nbsp;</td>
+				<td nowrap width="48%"align="center" ><HR style="color:black;"></td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td width="13%" nowrap  class="LargerLabel"  >Views:</td>
+				<td width="87%" wrap  class="LargerText"  >Bay, Canyon, Hills, Panoramic</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Gar/Prkg:</td>
+				<td wrap  class="LargerText"  >2 Car</td>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Kitchen:</td>
+				<td wrap  class="LargerText"  >220 V Wiring, Breakfast Room, Built-in Oven, Cntr Stone Slab, Dishwasher Incl., Disposal Incl, Electric Range Incl., Hood Over Range, Ice Maker Incl, Island, Refrigerator Incl., Remodeled</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Heat/Cool:</td>
+				<td wrap  class="LargerText"  >Ceiling Fan(s), Central Heat, Natural Gas</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Yard/Grds:</td>
+				<td wrap  class="LargerText"  >Covered Patio(s), Deck(s), Landscaped- Front, Landscaped- Rear, Patio(s), Sprink-Automatic, Other</td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="13%"  class="LargerLabel"  >Levels/Stories:</td>
+				<td wrap width="42%"  class="LargerText"  >2 Story</td>
+				<td nowrap width="13%"  class="LargerLabel"  >Oth Struct:</td>
+				<td wrap width="32%"  class="LargerText"  >None</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Floors:</td>
+				<td wrap  class="LargerText"  >Hardwood, Tile, W/W Carpet</td>
+				<td nowrap  class="LargerLabel"  >Foundation:</td>
+				<td wrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Exterior:</td>
+				<td nowrap  class="LargerText"  >Stucco, Wood Siding</td>
+				<td nowrap  class="LargerLabel"  >Roof:</td>
+				<td nowrap  class="LargerText"  >Composition</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Fireplaces:</td>
+				<td wrap  class="LargerText"  >2 Fireplaces, Living Room, Wood Burning</td>
+				<td nowrap  class="LargerLabel"  >Lot Desc:</td>
+				<td wrap  class="LargerText"  >Downslope, Rolling, Other</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Pool Type:</td>
+				<td wrap  class="LargerText"  >In Ground</td>
+				<td nowrap  class="LargerLabel"  >Water Source:</td>
+				<td wrap  class="LargerText"  >Water Public</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Other Rooms:</td>
+				<td wrap  class="LargerText"  >Entertainment/Media, Storage, Other</td>
+				<td nowrap  class="LargerLabel"  >Sewer/Septic:</td>
+				<td wrap  class="LargerText"  >Sewer Public</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Laundry App:</td>
+				<td wrap  class="LargerText"  >220 V, Hookups only, In Garage, Other</td>
+				<td nowrap  class="LargerLabel"  >Utilities:</td>
+				<td wrap  class="LargerText"  >PG&E</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Com/Rec Ar:</td>
+				<td wrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerLabel"  >Land Use:</td>
+				<td wrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel" >Restrictions:</td>
+				<td wrap  class="LargerText" ></td>
+				<td colspan="2">
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="29%"  class="LargerLabel"  >Well Depth:</td>
+							<td nowrap width="25%"  class="LargerText"  ></td>
+							<td nowrap width="25%"  class="LargerLabel"  >Well GPM:</td>
+							<td nowrap width="21%"  class="LargerText"  ></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+																																																																																																					 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																																																																																			 <!-- Page Footer for Agent -->
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="100%" align="center"><B><DIV class='NormalText'>Presented by : Stephanie Gregory Lic: 01443147  / Country Estates, Inc Office Lic.: 01035560  Phone: 707-372-5642        <BR>Information has not been verified, is not guaranteed, and is subject to change. <BR> Copyright &copy; 2015 Bay Area Real Estate Information Services, Inc.  All rights reserved.<BR>Copyright</A> &copy;2015 <A name="trans">Rapattoni Corporation. All rights reserved.</A><BR>U.S. Patent 6,910,045 10/20/15 at 7:26pm</DIV></B></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+				<div CLASS='pagebreak' style="visibility:hidden">&nbsp;</DIV>
+	
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																																																																																			 <!-- Page Footer for Agent -->
+		
+		<table border="0" width="100%" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="100%" align="center"><DIV class='LargeText'>Agent One Page Residential</DIV></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																																																																																			 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="10%"  class="LargerLabel"  >21513289</td>
+				<td nowrap width="18%"  class="LargerLabel"  >817 BANTRY Way</td>
+				<td nowrap width="17%"  class="LargerLabel"  >Benicia / D0201</td>
+				<td nowrap width="5%"  class="LargerLabel"  >S</td>
+				<td nowrap width="7%"  class="LargerLabel"  >List Price:</td>
+				<td nowrap width="10%"  class="LargerLabel"  >$689,500</td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td width="32%"></td>
+				<td width="14%"></td>
+				<td width="20%"></td>
+				<td width="14%"></td>
+				<td width="20%"></td>
+			</tr>
+			<tr>
+				<td nowrap valign="top" rowspan="17" >
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td valign="top"align="center"><IMG width="227" height="170" src="http://mediall.rapmls.com/norcalmls/listingpics/bigphoto/089/21513289.jpg?tsp=20150601135054">
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<table width="100%" cellspacing="0" cellpadding="0" border="0">
+									<tr>
+										<td nowrap width="50%"  class="LargerLabel"  align="center">
+										<A class="sBlueLinkB" href="javascript:ViewAllPictures(21513289,'S')"><B>Additional Pictures</B></A>&nbsp;&nbsp;&nbsp;&nbsp;
+										</td>
+										<td nowrap width="50%"  class="LargerLabel"  align="center">
+																				<a href="javascript:openVirtualMediaWindow(21513289);">Virtual Tour</a>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td nowrap  class="LargerLabel"  colspan="2">Single Family / Detached</td>
+				<td nowrap  class="LargerLabel"  >Orig LP:</td>
+				<td nowrap  class="LargerText"  >$689,500</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Bedrooms:</td>
+				<td nowrap  class="LargerText"  >4</td>
+				<td nowrap  class="LargerLabel"  >Selling Price:</td>
+				<td nowrap  class="LargerText"  >$689,500</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Baths F/H:</td>
+				<td nowrap  class="LargerText"  >4 (3/1)</td>
+				<td nowrap  class="LargerLabel"  >DOM/CDOM:&nbsp;</td>
+				<td nowrap  class="LargerText"  >23/23&nbsp;</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Total Rooms:</td>
+				<td nowrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerLabel"  >Year Built:</td>
+				<td nowrap  class="LargerText"  >1988/Realist Public Rec</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Approx SF:</td>
+				<td nowrap  class="LargerText"  >2860/Realist Public Rec</td>
+				<td nowrap  class="LargerLabel"  >APN:</td>
+				<td nowrap  class="LargerText"  >0083-121-040</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Lot SF/Acres:</td>
+				<td nowrap  class="LargerText"  >   9749 / 0.2238</td>
+				<td nowrap  class="LargerLabel"  >Unit/Blk/Lot:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Subdivision:</td>
+				<td nowrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerLabel"  >Zoning:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="5%" align="center">&nbsp;</td>
+							<td nowrap width="35%"><HR style="color:black;" ></td>
+							<td nowrap width="20%" align="center" class="LargerLabel"  >&nbsp; Showing &nbsp;</td>
+							<td nowrap width="35%"><HR style="color:black;" ></td>
+							<td nowrap width="5%" align="center">&nbsp;</td>
+						</tr>
+					</table>
+				</td>
+				<td nowrap class="LargerLabel">Style:</td>
+				<td nowrap class="LargerText">Traditional</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Occupancy:</td>
+				<td nowrap class="LargerText">V</td>
+				<td nowrap class="LargerLabel">Fireplace:</td>
+				<td wrap class="LargerText">Yes</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Occupant:</td>
+				<td nowrap class="LargerText"></td>
+				<td nowrap class="LargerLabel">Pool:</td>
+				<td wrap class="LargerText">No</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Occ Phone:</td>
+				<td nowrap class="LargerText"></td>
+				<td nowrap class="LargerLabel">Possession:</td>
+				<td nowrap class="LargerText">Close Escrow</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Own Name:</td>
+				<td nowrap class="LargerText"></td>
+				<td nowrap class="LargerLabel">2nd Unit on Lot:</td>
+				<td nowrap class="LargerText">No</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Own Phone:</td>
+				<td nowrap class="LargerText"></td>
+				<td nowrap class="LargerLabel">Senior:</td>
+				<td nowrap class="LargerText">No</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Showing:</td>
+				<td nowrap class="LargerText" colspan="3">Go Directly, BAREIS Lockbox, See Confidential Rmk</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Cross St:</td>
+				<td nowrap class="LargerText">Oxford Way</td>
+				<td nowrap class="LargerLabel">TBrosMap:</td>
+				<td nowrap class="LargerText">,</td>
+			</tr>
+		</table>
+																																																																																																						 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="12%"  class="LargerLabel"  >Directions:</td>
+				<td wrap width="88%"  class="LargerText"  >                       From Rose Drive to upper Oxford Way, to Bantry Way.</td>
+			</tr>
+		</table>
+																																																																				 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																				<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td wrap  class="LargerText" ><B>Public Remarks:&nbsp;</B>                                Beautiful customized Premiere home on coveted Bantry Way. Gorgeous 3-room suite, including an accessible bathroom, has been added on the main level - perfect for in-laws, guests, or as another master BR. Remodeled master bath and powder room, updated appliances, newer vinyl windows, travertine and wood floors, recent interior painting, and gorgeous tile accent wall at fireplace.  Front, side and back yards all decked out for maximum fun / R&R.</td>
+			</tr>
+		</table>
+																																																																			 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td wrap  class="LargerText" ><B>Conf/Show Instr:</B>&nbsp;                                                                  Vacant, with lockbox on front door.  Please do leave your card.  Original Manchester Plan, with 3-room suite, including accessible bathroom, added on main level.</td>
+			</tr>
+		</table>
+																																																																		 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="13%"  class="LargerLabel"  >List Office:</td>
+				<td nowrap width="37%"  class="LargerText"  >Olson Realty, Inc / DOLSON&nbsp;</td>
+				<td nowrap width="14%"  class="LargerText"  >707-745-3602</td>
+				<td nowrap width="11%"  class="LargerLabel"  >&nbsp;</td>
+				<td nowrap width="8%"  class="LargerLabel"  >Fax#:</td>
+				<td nowrap width="17%"  class="LargerText"  >707-745-3698</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >List Agent:</td>
+				<td nowrap  class="LargerText"  >Kathleen M Olson / D0227</td>
+				<td nowrap  class="LargerText"  >707-745-3602</td>
+				<td nowrap  class="LargerText"  ><B>Ext:</B>&nbsp;</td>
+				<td nowrap  class="LargerLabel"  >Fax#:</td>
+				<td nowrap  class="LargerText"  >707-745-3698</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Co List Off:</td>
+				<td nowrap  class="LargerText" >&nbsp;</td>
+				<td nowrap  class="LargerText"  >&nbsp;</td>
+				<td nowrap  class="LargerLabel"  >&nbsp;</td>
+				<td nowrap  class="LargerLabel"  >Fax#:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Co List Agent:</td>
+				<td nowrap  class="LargerText"  >&nbsp;</td>
+				<td nowrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerText" ><B>Ext:</B>&nbsp;</FONT></td>
+				<td nowrap  class="LargerLabel"  >Fax#:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="4%"  class="LargerLabel"  >LD:&nbsp;</td>
+				<td nowrap width="13%"  class="LargerText"  >06/01/15</td>
+				<td nowrap width="5%"  class="LargerLabel"  >OMD:</td>
+				<td nowrap width="14%"  class="LargerText" >06/01/15</td>
+				<td nowrap width="4%"  class="LargerLabel"  >XD:</td>
+				<td nowrap width="13%"  class="LargerText"  >08/31/15</td>
+				<td nowrap width="11%"  class="LargerLabel"  >Off Mkt Date:</td>
+				<td nowrap width="10%"  class="LargerText"  ></td>
+				<td nowrap width="5%"  class="LargerText"  ><B>CSO:</B></td>
+				<td nowrap width="21%"  class="LargerText"  >2.5</td>
+			</tr>
+		</table>
+																																																																																																				 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																								<table width="100%" cellspacing="0" cellpadding="0" border="0">
+				<tr>
+					<td width="2%"></td>
+					<td width="10%"></td>
+					<td width="9%"></td>
+					<td width="33%"></td>
+					<td width="10%"></td>
+					<td width="21%"></td>
+				</tr>
+				<tr>
+					<td nowrap  class="LargerLabel"  >Contingent Date:&nbsp;</td>
+					<td nowrap  class="LargerText"  >06/06/15</td>
+					<td nowrap  class="LargerLabel"  >COE Date:&nbsp;</td>
+					<td nowrap  class="LargerText" >07/02/15</td>
+					<td nowrap  class="LargerLabel"  >Selling Price:&nbsp;</td>
+					<td nowrap  class="LargerText"  >$689,500</td>
+				</tr>
+				<tr>
+					<td nowrap  class="LargerLabel"  >Pending Date:&nbsp;</td>
+					<td nowrap  class="LargerText"  >06/24/15</td>
+					<td nowrap  class="LargerLabel"  >Terms&nbsp;</td>
+					<td nowrap  class="LargerText" >Conventional</td>
+					<td nowrap  class="LargerLabel"  >DOM/CDOM:&nbsp;&nbsp;</td>
+					<td nowrap  class="LargerText"  >23/23&nbsp;</td>
+				</tr>
+				<tr>
+					<td nowrap class="LargerLabel">Slr Consessions:&nbsp;</td>
+					<td class="LargerText">No&nbsp;</td>
+					<td nowrap  class="LargerLabel"  >Sold Remarks:&nbsp;</td>
+					<td wrap  class="LargerText" align="left" colspan="5"></td>
+				</tr>
+			</table>
+			<table width="100%" cellspacing="0" cellpadding="0" border="0">
+				<tr>
+
+					<td nowrap width="2%" class="LargerLabel"  >Sold By:&nbsp;</td>
+					<td nowrap width="41%" class="LargerText" >Better Homes Realty / 246</td>
+					<td nowrap width="10%" class="LargerLabel"  >Agent:&nbsp;</td>
+					<td nowrap width="36%" class="LargerText" >Sean Donnelly / EB130031</td>
+				</tr>
+				<tr>
+					<td nowrap  class="LargerLabel"  >Co Sold By:&nbsp;</td>
+					<td nowrap  class="LargerText" ></td>
+					<td nowrap  class="LargerLabel"  >Co Agent:&nbsp;</td>
+					<td nowrap  class="LargerText"  ></td>
+				</tr>
+			</table>
+																																																																																															 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																									<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td>
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="2%" class="LargerLabel">HOA:&nbsp;</td>
+							<td nowrap class="LargerText">No</td>
+							<td nowrap width="2%" class="LargerLabel">Amount:&nbsp;</td>
+							<td nowrap class="LargerText">$0.00 /&nbsp;</td>
+							<td nowrap width="2%" class="LargerLabel">Incl:</td>
+							<td nowrap class="LargerText"></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="2%" class="LargerLabel">Current Rent:&nbsp;</td>
+							<td nowrap class="LargerText">$0.00</td>
+							<td nowrap width="2%" class="LargerLabel">Type:&nbsp;</td>
+							<td nowrap class="LargerText">&nbsp;</td>
+							<td nowrap width="2%" class="LargerLabel">Furnished:&nbsp;</td>
+							<td nowrap class="LargerText">&nbsp;</td>
+							<td nowrap width="2%" class="LargerLabel">Com Int Dev:&nbsp;</td>
+							<td nowrap class="LargerText">No</td>
+							<td nowrap width="2%" class="LargerLabel">Planned Unit Dev:&nbsp;</td>
+							<td nowrap class="LargerText">No</td>
+						</tr>
+						<tr>
+							<td nowrap class="LargerLabel">Requirements:&nbsp;</td>
+							<td nowrap class="LargerText" colspan="5"></td>
+							<td nowrap class="LargerLabel">Min Lse Mos:&nbsp;</td>
+							<td nowrap class="LargerText">&nbsp;</td>
+							<td nowrap class="LargerLabel">Max Lse Mos:&nbsp;</td>
+							<td nowrap class="LargerText"></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+																																																																																													 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																	<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="45%"align="center" ><HR style="color:black;"></td>
+				<td nowrap width="7%" align="center"  class="LargerLabel" >&nbsp; Features &nbsp;</td>
+				<td nowrap width="48%"align="center" ><HR style="color:black;"></td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td width="13%" nowrap  class="LargerLabel"  >Views:</td>
+				<td width="87%" wrap  class="LargerText"  >Greenbelt</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Gar/Prkg:</td>
+				<td wrap  class="LargerText"  >2 Car, Garage, Attached</td>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Kitchen:</td>
+				<td wrap  class="LargerText"  >220 V Wiring, Breakfast Area, Cntr Ceramic Tile, Cooktop Stove, Dishwasher Incl., Double Oven Incl., Microwave Incl.</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Heat/Cool:</td>
+				<td wrap  class="LargerText"  >Central Heat, No Air Conditioning</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Yard/Grds:</td>
+				<td wrap  class="LargerText"  >Landscaped- Front, Landscaped- Rear</td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="13%"  class="LargerLabel"  >Levels/Stories:</td>
+				<td wrap width="42%"  class="LargerText"  >2 Story</td>
+				<td nowrap width="13%"  class="LargerLabel"  >Oth Struct:</td>
+				<td wrap width="32%"  class="LargerText"  >Shed(s)</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Floors:</td>
+				<td wrap  class="LargerText"  >Part Carpet, Part Hardwood, Tile</td>
+				<td nowrap  class="LargerLabel"  >Foundation:</td>
+				<td wrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Exterior:</td>
+				<td nowrap  class="LargerText"  >Stucco</td>
+				<td nowrap  class="LargerLabel"  >Roof:</td>
+				<td nowrap  class="LargerText"  >Composition</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Fireplaces:</td>
+				<td wrap  class="LargerText"  >1 Fireplace, Family Room</td>
+				<td nowrap  class="LargerLabel"  >Lot Desc:</td>
+				<td wrap  class="LargerText"  >Regular</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Pool Type:</td>
+				<td wrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerLabel"  >Water Source:</td>
+				<td wrap  class="LargerText"  >Water Public</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Other Rooms:</td>
+				<td wrap  class="LargerText"  >Guest Suite</td>
+				<td nowrap  class="LargerLabel"  >Sewer/Septic:</td>
+				<td wrap  class="LargerText"  >Sewer Public</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Laundry App:</td>
+				<td wrap  class="LargerText"  >Hookups only, In Laundry Room</td>
+				<td nowrap  class="LargerLabel"  >Utilities:</td>
+				<td wrap  class="LargerText"  >PG&E</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Com/Rec Ar:</td>
+				<td wrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerLabel"  >Land Use:</td>
+				<td wrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel" >Restrictions:</td>
+				<td wrap  class="LargerText" ></td>
+				<td colspan="2">
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="29%"  class="LargerLabel"  >Well Depth:</td>
+							<td nowrap width="25%"  class="LargerText"  ></td>
+							<td nowrap width="25%"  class="LargerLabel"  >Well GPM:</td>
+							<td nowrap width="21%"  class="LargerText"  ></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+																																																																																																					 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																																																																																			 <!-- Page Footer for Agent -->
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="100%" align="center"><B><DIV class='NormalText'>Presented by : Stephanie Gregory Lic: 01443147  / Country Estates, Inc Office Lic.: 01035560  Phone: 707-372-5642        <BR>Information has not been verified, is not guaranteed, and is subject to change. <BR> Copyright &copy; 2015 Bay Area Real Estate Information Services, Inc.  All rights reserved.<BR>Copyright</A> &copy;2015 <A name="trans">Rapattoni Corporation. All rights reserved.</A><BR>U.S. Patent 6,910,045 10/20/15 at 7:26pm</DIV></B></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+				<div CLASS='pagebreak' style="visibility:hidden">&nbsp;</DIV>
+	
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																																																																																			 <!-- Page Footer for Agent -->
+		
+		<table border="0" width="100%" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="100%" align="center"><DIV class='LargeText'>Agent One Page Residential</DIV></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																																																																																			 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="10%"  class="LargerLabel"  >21520929</td>
+				<td nowrap width="18%"  class="LargerLabel"  >440 Mills Dr</td>
+				<td nowrap width="17%"  class="LargerLabel"  >Benicia / D0202</td>
+				<td nowrap width="5%"  class="LargerLabel"  >WT</td>
+				<td nowrap width="7%"  class="LargerLabel"  >List Price:</td>
+				<td nowrap width="10%"  class="LargerLabel"  >$699,000</td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td width="32%"></td>
+				<td width="14%"></td>
+				<td width="20%"></td>
+				<td width="14%"></td>
+				<td width="20%"></td>
+			</tr>
+			<tr>
+				<td nowrap valign="top" rowspan="17" >
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td valign="top"align="center"><IMG width="227" height="170" src="http://mediall.rapmls.com/norcalmls/listingpics/bigphoto/029/21520929.jpg?tsp=20150926140800">
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<table width="100%" cellspacing="0" cellpadding="0" border="0">
+									<tr>
+										<td nowrap width="50%"  class="LargerLabel"  align="center">
+										<A class="sBlueLinkB" href="javascript:ViewAllPictures(21520929,'S')"><B>Additional Pictures</B></A>&nbsp;&nbsp;&nbsp;&nbsp;
+										</td>
+										<td nowrap width="50%"  class="LargerLabel"  align="center">
+																				<a href="javascript:openVirtualMediaWindow(21520929);">Virtual Tour</a>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td nowrap  class="LargerLabel"  colspan="2">Single Family / Detached</td>
+				<td nowrap  class="LargerLabel"  >Orig LP:</td>
+				<td nowrap  class="LargerText"  >$735,000</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Bedrooms:</td>
+				<td nowrap  class="LargerText"  >4</td>
+				<td nowrap  class="LargerLabel"  >Selling Price:</td>
+				<td nowrap  class="LargerText"  >$</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Baths F/H:</td>
+				<td nowrap  class="LargerText"  >3 (3/0)</td>
+				<td nowrap  class="LargerLabel"  >DOM/CDOM:&nbsp;</td>
+				<td nowrap  class="LargerText"  >53/53&nbsp;</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Total Rooms:</td>
+				<td nowrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerLabel"  >Year Built:</td>
+				<td nowrap  class="LargerText"  >1977/Realist Public Rec</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Approx SF:</td>
+				<td nowrap  class="LargerText"  >2569/Realist Public Rec</td>
+				<td nowrap  class="LargerLabel"  >APN:</td>
+				<td nowrap  class="LargerText"  >0086-293-030</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Lot SF/Acres:</td>
+				<td nowrap  class="LargerText"  >   9583 / 0.2200</td>
+				<td nowrap  class="LargerLabel"  >Unit/Blk/Lot:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Subdivision:</td>
+				<td nowrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerLabel"  >Zoning:</td>
+				<td nowrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="5%" align="center">&nbsp;</td>
+							<td nowrap width="35%"><HR style="color:black;" ></td>
+							<td nowrap width="20%" align="center" class="LargerLabel"  >&nbsp; Showing &nbsp;</td>
+							<td nowrap width="35%"><HR style="color:black;" ></td>
+							<td nowrap width="5%" align="center">&nbsp;</td>
+						</tr>
+					</table>
+				</td>
+				<td nowrap class="LargerLabel">Style:</td>
+				<td nowrap class="LargerText">Traditional</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Occupancy:</td>
+				<td nowrap class="LargerText">O</td>
+				<td nowrap class="LargerLabel">Fireplace:</td>
+				<td wrap class="LargerText">Yes</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Occupant:</td>
+				<td nowrap class="LargerText">Jeannie</td>
+				<td nowrap class="LargerLabel">Pool:</td>
+				<td wrap class="LargerText">No</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Occ Phone:</td>
+				<td nowrap class="LargerText">707-246-6567</td>
+				<td nowrap class="LargerLabel">Possession:</td>
+				<td nowrap class="LargerText">Close Escrow</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Own Name:</td>
+				<td nowrap class="LargerText">Jeannie</td>
+				<td nowrap class="LargerLabel">2nd Unit on Lot:</td>
+				<td nowrap class="LargerText">No</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Own Phone:</td>
+				<td nowrap class="LargerText">707-246-6567</td>
+				<td nowrap class="LargerLabel">Senior:</td>
+				<td nowrap class="LargerText">No</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Showing:</td>
+				<td nowrap class="LargerText" colspan="3">BAREIS Lockbox, Leave Card, Contact List Agent, See Confidential Rmk</td>
+			</tr>
+			<tr>
+				<td nowrap class="LargerLabel">Cross St:</td>
+				<td nowrap class="LargerText">Cambridge</td>
+				<td nowrap class="LargerLabel">TBrosMap:</td>
+				<td nowrap class="LargerText">,</td>
+			</tr>
+		</table>
+																																																																																																						 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="12%"  class="LargerLabel"  >Directions:</td>
+				<td wrap width="88%"  class="LargerText"  >                       Hastings, Right on Mills</td>
+			</tr>
+		</table>
+																																																																				 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																				<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td wrap  class="LargerText" ><B>Public Remarks:&nbsp;</B>                                Must see these views!! A Water View from almost every room! This home is awaiting the entertainers with a dining room just steps to the covered patio. Upstairs features main master bedroom with a large walk in closet and office, spacious family room with large deck to enjoy the view. On the main level is a master suite and 2 additional bedrooms. Updated heating and air, beautiful drought tolerant landscaping. Close to shopping and schools.</td>
+			</tr>
+		</table>
+																																																																			 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td wrap  class="LargerText" ><B>Conf/Show Instr:</B>&nbsp;                                                                  Call Jeannie 707-246-6567 leave message and go!</td>
+			</tr>
+		</table>
+																																																																		 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="13%"  class="LargerLabel"  >List Office:</td>
+				<td nowrap width="37%"  class="LargerText"  >Hamann Real Estate / DHAMAN&nbsp;</td>
+				<td nowrap width="14%"  class="LargerText"  >707-747-9300</td>
+				<td nowrap width="11%"  class="LargerLabel"  >&nbsp;</td>
+				<td nowrap width="8%"  class="LargerLabel"  >Fax#:</td>
+				<td nowrap width="17%"  class="LargerText"  >707-747-6970</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >List Agent:</td>
+				<td nowrap  class="LargerText"  >Jeannie M Hamann / D0124</td>
+				<td nowrap  class="LargerText"  >707-246-6567</td>
+				<td nowrap  class="LargerText"  ><B>Ext:</B>&nbsp;</td>
+				<td nowrap  class="LargerLabel"  >Fax#:</td>
+				<td nowrap  class="LargerText"  >707-747-6970</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Co List Off:</td>
+				<td nowrap  class="LargerText" >Hamann Real Estate / DHAMAN&nbsp;</td>
+				<td nowrap  class="LargerText"  >707-747-9300&nbsp;</td>
+				<td nowrap  class="LargerLabel"  >&nbsp;</td>
+				<td nowrap  class="LargerLabel"  >Fax#:</td>
+				<td nowrap  class="LargerText"  >707-747-6970</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Co List Agent:</td>
+				<td nowrap  class="LargerText"  >Wendy Widhalm-Schlosser / D333001&nbsp;</td>
+				<td nowrap  class="LargerText"  >707-816-7838</td>
+				<td nowrap  class="LargerText" ><B>Ext:</B>&nbsp;</FONT></td>
+				<td nowrap  class="LargerLabel"  >Fax#:</td>
+				<td nowrap  class="LargerText"  >707-747-6970</td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="4%"  class="LargerLabel"  >LD:&nbsp;</td>
+				<td nowrap width="13%"  class="LargerText"  >08/25/15</td>
+				<td nowrap width="5%"  class="LargerLabel"  >OMD:</td>
+				<td nowrap width="14%"  class="LargerText" >08/28/15</td>
+				<td nowrap width="4%"  class="LargerLabel"  >XD:</td>
+				<td nowrap width="13%"  class="LargerText"  >02/16/16</td>
+				<td nowrap width="11%"  class="LargerLabel"  >Off Mkt Date:</td>
+				<td nowrap width="10%"  class="LargerText"  >10/20/15</td>
+				<td nowrap width="5%"  class="LargerText"  ><B>CSO:</B></td>
+				<td nowrap width="21%"  class="LargerText"  >2.5</td>
+			</tr>
+		</table>
+																																																																																																				 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																									<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td>
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="2%" class="LargerLabel">HOA:&nbsp;</td>
+							<td nowrap class="LargerText">No</td>
+							<td nowrap width="2%" class="LargerLabel">Amount:&nbsp;</td>
+							<td nowrap class="LargerText">$0.00 /&nbsp;</td>
+							<td nowrap width="2%" class="LargerLabel">Incl:</td>
+							<td nowrap class="LargerText"></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="2%" class="LargerLabel">Current Rent:&nbsp;</td>
+							<td nowrap class="LargerText">$0.00</td>
+							<td nowrap width="2%" class="LargerLabel">Type:&nbsp;</td>
+							<td nowrap class="LargerText">&nbsp;</td>
+							<td nowrap width="2%" class="LargerLabel">Furnished:&nbsp;</td>
+							<td nowrap class="LargerText">&nbsp;</td>
+							<td nowrap width="2%" class="LargerLabel">Com Int Dev:&nbsp;</td>
+							<td nowrap class="LargerText">No</td>
+							<td nowrap width="2%" class="LargerLabel">Planned Unit Dev:&nbsp;</td>
+							<td nowrap class="LargerText">No</td>
+						</tr>
+						<tr>
+							<td nowrap class="LargerLabel">Requirements:&nbsp;</td>
+							<td nowrap class="LargerText" colspan="5"></td>
+							<td nowrap class="LargerLabel">Min Lse Mos:&nbsp;</td>
+							<td nowrap class="LargerText">&nbsp;</td>
+							<td nowrap class="LargerLabel">Max Lse Mos:&nbsp;</td>
+							<td nowrap class="LargerText"></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+																																																																																													 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																	<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="45%"align="center" ><HR style="color:black;"></td>
+				<td nowrap width="7%" align="center"  class="LargerLabel" >&nbsp; Features &nbsp;</td>
+				<td nowrap width="48%"align="center" ><HR style="color:black;"></td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td width="13%" nowrap  class="LargerLabel"  >Views:</td>
+				<td width="87%" wrap  class="LargerText"  >Bridges, Hills, Panoramic, Water</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Gar/Prkg:</td>
+				<td wrap  class="LargerText"  >2 Car, Attached</td>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Kitchen:</td>
+				<td wrap  class="LargerText"  >Refrigerator Incl.</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Heat/Cool:</td>
+				<td wrap  class="LargerText"  >Central Air, Central Heat</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Yard/Grds:</td>
+				<td wrap  class="LargerText"  >Covered Patio(s), Landscaped- Misc., Patio(s)</td>
+			</tr>
+		</table>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td nowrap width="13%"  class="LargerLabel"  >Levels/Stories:</td>
+				<td wrap width="42%"  class="LargerText"  >2 Story</td>
+				<td nowrap width="13%"  class="LargerLabel"  >Oth Struct:</td>
+				<td wrap width="32%"  class="LargerText"  >Shed(s)</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Floors:</td>
+				<td wrap  class="LargerText"  >Hardwood, Laminate, Tile, W/W Carpet</td>
+				<td nowrap  class="LargerLabel"  >Foundation:</td>
+				<td wrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Exterior:</td>
+				<td nowrap  class="LargerText"  >Shingle, Stucco</td>
+				<td nowrap  class="LargerLabel"  >Roof:</td>
+				<td nowrap  class="LargerText"  >Tile</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Fireplaces:</td>
+				<td wrap  class="LargerText"  >1 Fireplace, Living Room</td>
+				<td nowrap  class="LargerLabel"  >Lot Desc:</td>
+				<td wrap  class="LargerText"  >City</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Pool Type:</td>
+				<td wrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerLabel"  >Water Source:</td>
+				<td wrap  class="LargerText"  >Water Public</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Other Rooms:</td>
+				<td wrap  class="LargerText"  >Office</td>
+				<td nowrap  class="LargerLabel"  >Sewer/Septic:</td>
+				<td wrap  class="LargerText"  >Sewer Public</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Laundry App:</td>
+				<td wrap  class="LargerText"  >Hookups only, In Garage</td>
+				<td nowrap  class="LargerLabel"  >Utilities:</td>
+				<td wrap  class="LargerText"  >PG&E</td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel"  >Com/Rec Ar:</td>
+				<td wrap  class="LargerText"  ></td>
+				<td nowrap  class="LargerLabel"  >Land Use:</td>
+				<td wrap  class="LargerText"  ></td>
+			</tr>
+			<tr>
+				<td nowrap  class="LargerLabel" >Restrictions:</td>
+				<td wrap  class="LargerText" ></td>
+				<td colspan="2">
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap width="29%"  class="LargerLabel"  >Well Depth:</td>
+							<td nowrap width="25%"  class="LargerText"  ></td>
+							<td nowrap width="25%"  class="LargerLabel"  >Well GPM:</td>
+							<td nowrap width="21%"  class="LargerText"  ></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+																																																																																																					 <!-- Page Footer for Agent -->
+		
+	
+	<!-- Search Criteria goes here -->
+		<!-- -->
+
+																																																																																																																			 <!-- Page Footer for Agent -->
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="100%" align="center"><B><DIV class='NormalText'>Presented by : Stephanie Gregory Lic: 01443147  / Country Estates, Inc Office Lic.: 01035560  Phone: 707-372-5642        <BR>Information has not been verified, is not guaranteed, and is subject to change. <BR> Copyright &copy; 2015 Bay Area Real Estate Information Services, Inc.  All rights reserved.<BR>Copyright</A> &copy;2015 <A name="trans">Rapattoni Corporation. All rights reserved.</A><BR>U.S. Patent 6,910,045 10/20/15 at 7:26pm</DIV></B></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+	</BODY>
+</HTML>
