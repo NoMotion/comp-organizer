@@ -7,6 +7,7 @@ class CompParser():
 	def __init__(self, configpath="comp.ini"):
 		self.configpath = configpath
 		self.datadict = {}
+		self.whitelist = []
 
 	def parse(self):
 		self.parseConfig(self.configpath)
@@ -15,9 +16,9 @@ class CompParser():
 		self.createJson()
 	def getData(self, i=None):
 		if not i:
-			return datadict
+			return self.datadict
 		else:
-			return datadict[i]
+			return self.datadict[i]
 	def parseHtmltd(self, htmlpath):
 		
 		tdlist = []
@@ -93,16 +94,22 @@ class CompParser():
 		# for house in houses:
 		# 	print house['Status:'],'\n'
 
+	def filterDict(self, datadict):
+		#split the list of filters and strip whitespace and put in list
+		self.whitelist = [Filter.strip() for Filter in self.conf._sections['Data']['filters'].split(',')]
+		datalist = []
+		for dictionary in datadict:
+			filterdict = {whitekey : dictionary[whitekey] for whitekey in self.whitelist if whitekey in dictionary }
+			datalist.append(filterdict)
+		return datalist
+	def getWhitelist(self):
+		return self.whitelist
 	def createJson(self):
 		jsonpath = self.conf._sections['Comp']['json']
-		os.remove(jsonpath)
-		#split the list of filters and strip whitespace and put in list
-		whitelist = [Filter.strip() for Filter in self.conf._sections['Data']['filters'].split(',')]
+		try: os.remove(jsonpath)
+		except: pass
 
-		datalist = []
-		for dictionary in self.datadict:
-			filterdict = {whitekey : dictionary[whitekey] for whitekey in whitelist if whitekey in dictionary }
-			datalist.append(filterdict)
+		datalist = self.filterDict(self.datadict)
 
 		with open(jsonpath, 'ar') as jsonfile:
 			json.dump(datalist, jsonfile, indent=4)
