@@ -4,21 +4,21 @@ import ConfigParser
 import re
 
 class CompParser():
-	def __init__(self,configpath="comp.ini"):
+	def __init__(self, configpath="comp.ini"):
 		self.configpath = configpath
 		self.datadict = {}
 
-	def parse():
+	def parse(self):
 		self.parseConfig(self.configpath)
 		htmlpath = self.conf._sections['Comp']['html']
 		self.datadict = self.parseHtmltd(htmlpath)
-		self.createJson(datadict)
-	def getData(i=None):
+		self.createJson()
+	def getData(self, i=None):
 		if not i:
 			return datadict
 		else:
 			return datadict[i]
-	def parseHtmltd(htmlpath):
+	def parseHtmltd(self, htmlpath):
 		
 		tdlist = []
 		matchstr = ''
@@ -93,11 +93,23 @@ class CompParser():
 		# for house in houses:
 		# 	print house['Status:'],'\n'
 
-	def createJson(datadict):
+	def createJson(self):
 		jsonpath = self.conf._sections['Comp']['json']
-		with open(jsonpath, 'w') as jsonfile:
-			json.dump(datadict, jsonfile, indent=4, sort_keys=True)
+		os.remove(jsonpath)
+		#split the list of filters and strip whitespace and put in list
+		whitelist = [Filter.strip() for Filter in self.conf._sections['Data']['filters'].split(',')]
 
-	def parseConfig(path):
+		datalist = []
+		for dictionary in self.datadict:
+			filterdict = {whitekey : dictionary[whitekey] for whitekey in whitelist if whitekey in dictionary }
+			datalist.append(filterdict)
+
+		with open(jsonpath, 'ar') as jsonfile:
+			json.dump(datalist, jsonfile, indent=4)
+
+	def parseConfig(self, path):
 		self.conf = ConfigParser.ConfigParser()
 		self.conf.read(path)
+
+parser = CompParser()
+parser.parse()
