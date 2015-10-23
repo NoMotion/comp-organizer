@@ -1,5 +1,6 @@
 import os, sys
 import wx, re
+from wx.lib.mixins.listctrl import ListCtrlAutoWidthMixin
 import CompParser
 
 def driver():
@@ -9,7 +10,7 @@ def driver():
 
 class CompFrame(wx.Frame):
 	def __init__(self, parent, title):
-		wx.Frame.__init__(self, parent, title=title, size=(450,450), style=wx.MAXIMIZE_BOX | wx.RESIZE_BORDER | wx.SYSTEM_MENU | wx.CAPTION | wx.CLOSE_BOX | wx.MINIMIZE_BOX)
+		wx.Frame.__init__(self, parent, title=title, size=(950,550), style=wx.MAXIMIZE_BOX | wx.RESIZE_BORDER | wx.SYSTEM_MENU | wx.CAPTION | wx.CLOSE_BOX | wx.MINIMIZE_BOX)
 		self.parser = CompParser.CompParser()
 		self.parser.parse()
 
@@ -24,7 +25,7 @@ class CompFrame(wx.Frame):
 
 		#initiulaze ui elements
 		hbox = wx.BoxSizer(wx.HORIZONTAL)
-		self.list = wx.ListCtrl(self.panel, -1, style=wx.LC_REPORT|wx.BORDER_SUNKEN)
+		self.list = CompListCtrl(self.panel)
 
 		#intializing list control columns
 		self.list.InsertColumn(0, 'Attribute', width=140)
@@ -45,5 +46,10 @@ class CompFrame(wx.Frame):
 		self.panel.SetSizer(hbox)
 		self.Centre()
 		self.Show()
+
+class CompListCtrl(wx.ListCtrl, ListCtrlAutoWidthMixin):
+	def __init__(self, parent):
+		wx.ListCtrl.__init__(self, parent, -1, style=wx.LC_REPORT|wx.BORDER_SUNKEN)
+		ListCtrlAutoWidthMixin.__init__(self)
 
 driver()
