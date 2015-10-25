@@ -9,10 +9,9 @@ class CompParser():
 		self.datadict = {}
 		self.whitelist = []
 
-	def parse(self):
+	def parse(self, path=None):
 		self.parseConfig(self.configpath)
-		htmlpath = self.conf._sections['Comp']['html']
-		self.datadict = self.parseHtmltd(htmlpath)
+		self.datadict = self.parseHtmltd(path)
 		self.createJson()
 	def getData(self, i=None):
 		if not i:
@@ -111,7 +110,7 @@ class CompParser():
 
 		datalist = self.filterDict(self.datadict)
 
-		with open(jsonpath, 'ar') as jsonfile:
+		with open(jsonpath, 'a') as jsonfile:
 			json.dump(datalist, jsonfile, indent=4)
 
 	def parseConfig(self, path):
@@ -119,4 +118,3 @@ class CompParser():
 		self.conf.read(path)
 
 parser = CompParser()
-parser.parse()

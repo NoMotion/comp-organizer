@@ -12,9 +12,21 @@ class CompFrame(wx.Frame):
 	def __init__(self, parent, title):
 		wx.Frame.__init__(self, parent, title=title, size=(950,550), style=wx.MAXIMIZE_BOX | wx.RESIZE_BORDER | wx.SYSTEM_MENU | wx.CAPTION | wx.CLOSE_BOX | wx.MINIMIZE_BOX)
 		self.parser = CompParser.CompParser()
-		self.parser.parse()
 
+		path = self.openDialog()
+		if not path:
+			sys.exit(0)
+
+		self.parser.parse(path)
 		self.InitUI()
+	def openDialog(self):
+		openFileDialog = wx.FileDialog(self, "Open HTML file", "", "", "*.htm", wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
+
+
+		if openFileDialog.ShowModal() == wx.ID_CANCEL:
+			return 
+		else:
+			return openFileDialog.GetPath()
 	def InitUI(self):
 		self.panel = wx.Panel(self)
 
