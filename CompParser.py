@@ -13,11 +13,8 @@ class CompParser():
 		self.parseConfig(self.configpath)
 		self.datadict = self.parseHtmltd(path)
 		self.createJson()
-	def getData(self, i=None):
-		if not i:
-			return self.datadict
-		else:
-			return self.datadict[i]
+	def getData(self):
+		return self.datadict
 	def parseHtmltd(self, htmlpath):
 		
 		tdlist = []

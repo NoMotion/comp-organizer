@@ -1,8 +1,11 @@
 import os, sys
 import wx, re
 from wx.lib.mixins.listctrl import ListCtrlAutoWidthMixin
+from wx.lib.wordwrap import wordwrap
+import wx.lib.agw.ultimatelistctrl as ULC  
 import CompParser
-
+WINDOW_WIDTH=950
+WINDOW_HEIGHT=550
 def driver():
 	app = wx.App(False)
 	frame = CompFrame(None, 'Comparables')
@@ -10,7 +13,7 @@ def driver():
 
 class CompFrame(wx.Frame):
 	def __init__(self, parent, title):
-		wx.Frame.__init__(self, parent, title=title, size=(950,550), style=wx.MAXIMIZE_BOX | wx.RESIZE_BORDER | wx.SYSTEM_MENU | wx.CAPTION | wx.CLOSE_BOX | wx.MINIMIZE_BOX)
+		wx.Frame.__init__(self, parent, title=title, size=(WINDOW_WIDTH,WINDOW_HEIGHT), style=wx.MAXIMIZE_BOX | wx.RESIZE_BORDER | wx.SYSTEM_MENU | wx.CAPTION | wx.CLOSE_BOX | wx.MINIMIZE_BOX)
 		self.parser = CompParser.CompParser()
 
 		path = self.openDialog()
@@ -18,7 +21,9 @@ class CompFrame(wx.Frame):
 			sys.exit(0)
 
 		self.parser.parse(path)
-		self.InitUI()
+		self.panel = ULCPanel(self, self.parser)
+		self.Centre()
+		self.Show()
 	def openDialog(self):
 		openFileDialog = wx.FileDialog(self, "Open HTML file", "", "", "*.htm", wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
 
@@ -27,41 +32,68 @@ class CompFrame(wx.Frame):
 			return 
 		else:
 			return openFileDialog.GetPath()
-	def InitUI(self):
+	def InitListCtrl(self):
 		self.panel = wx.Panel(self)
-
+		listctrl = CompListCtrl(self.panel)
+		self.Bind(wx.EVT_LIST_COL_CLICK, self.OnColClick, listctrl)
+		self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelect, listctrl)
 		#filter the data
-		housedata = self.parser.filterDict(self.parser.getData())
+		self.housedata = self.parser.filterDict(self.parser.getData())
 		#grab all the keys so we have it handy and outside of the dictionary
 		keylist = self.parser.getWhitelist()
-
-		#initiulaze ui elements
-		hbox = wx.BoxSizer(wx.HORIZONTAL)
-		self.list = CompListCtrl(self.panel)
-
 		#intializing list control columns
-		self.list.InsertColumn(0, 'Attribute', width=140)
+		listctrl.InsertColumn(0, 'Attribute', width=140)
 		#make a column and label it by address for each house in the dictionary
-		for index, house in enumerate(housedata):
-			self.list.InsertColumn(index+1, house['Address:'].title(), width=130)
+		for index, house in enumerate(self.housedata):
+			listctrl.InsertColumn(index+1, house['Address:'].title(), width=130)
 
 		#populate our listctrl, the populating is handled by row
 		for i, key in enumerate(keylist):
 			#row is created each time we make a new row, and the first element in the row will be the key
-			row = self.list.InsertStringItem(i,key)
+			row = listctrl.InsertStringItem(i,key)
 			#using the key, we will go through each house and add the key's value to the end of the row
-			for h_idx, house in enumerate(housedata):
-				try: self.list.SetStringItem(row,h_idx+1,house[key])
+			for h_idx, house in enumerate(self.housedata):
+				try: listctrl.SetStringItem(row,h_idx+1,house[key])
 				except KeyError: pass
-
-		hbox.Add(self.list, 1, flag=wx.EXPAND|wx.ALL, border=5)
-		self.panel.SetSizer(hbox)
-		self.Centre()
-		self.Show()
+		return listctrl
 
 class CompListCtrl(wx.ListCtrl, ListCtrlAutoWidthMixin):
 	def __init__(self, parent):
-		wx.ListCtrl.__init__(self, parent, -1, style=wx.LC_REPORT|wx.BORDER_SUNKEN)
+		wx.ListCtrl.__init__(self, parent, -1, style=wx.LC_REPORT|wx.LC_HRULES|wx.BORDER_SUNKEN)
 		ListCtrlAutoWidthMixin.__init__(self)
+
+class ULCPanel(wx.Panel):
+	def __init__(self, parent, parser):
+		wx.Panel.__init__(self, parent, style=wx.WANTS_CHARS)
+		COL_WIDTH = 160
+		self.parser = parser
+		
+		listctrl = ULC.UltimateListCtrl(self, agwStyle=ULC.ULC_REPORT|ULC.ULC_HAS_VARIABLE_ROW_HEIGHT|ULC.ULC_HRULES)
+		
+		#filter the data
+		self.housedata = self.parser.filterDict(self.parser.getData())
+		#grab all the keys so we have it handy and outside of the dictionary
+		keylist = self.parser.getWhitelist()
+		#intializing list control columns
+		listctrl.InsertColumn(0, 'Attribute', width=COL_WIDTH-30)
+		#make a column and label it by address for each house in the dictionary
+		for index, house in enumerate(self.housedata):
+			listctrl.InsertColumn(index+1, house['Address:'].title(), width=COL_WIDTH)
+
+		#populate our listctrl, the populating is handled by row
+		for i, key in enumerate(keylist):
+			if key == 'Address:': continue
+			#row is created each time we make a new row, and the first element in the row will be the key
+			row = listctrl.InsertStringItem(i,key)
+			#using the key, we will go through each house and add the key's value to the end of the row
+			for h_idx, house in enumerate(self.housedata):
+				try: 
+					content = wordwrap(house[key], COL_WIDTH-5, wx.ClientDC(self))
+					listctrl.SetStringItem(row,h_idx+1,content)
+				except KeyError: pass
+
+		sizer = wx.BoxSizer(wx.VERTICAL)
+		sizer.Add(listctrl, 1, flag=wx.EXPAND|wx.ALL, border=5)
+		self.SetSizer(sizer)
 
 driver()
