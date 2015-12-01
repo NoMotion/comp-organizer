@@ -55,7 +55,7 @@ class CompParser():
 		#Key = title of item, Value = value of item
 		#ex: Key = 'List Price:' Value = '$600,000'
 		houses = []
-		terminator = 'Well GPM:'
+		terminator = 'Location:'
 		#a few tds have no title td so we will manually add them to intialize our dict
 		dataDict = {'MLS ID:' : tdlist[0], 'Address:' : tdlist[1], 'Status:' : tdlist[3]}
 
@@ -67,7 +67,7 @@ class CompParser():
 				houses.append(dataDict)
 				#initialize a new dictionary now with the offset of the new house in the tdlist
 				try:
-					dataDict = {'MLS ID:' : tdlist[index+1], 'Address:' : tdlist[index+2], 'Status:' : tdlist[index+4]}
+					dataDict = {'MLS ID:' : tdlist[index+3], 'Address:' : tdlist[index+4], 'Status:' : tdlist[index+6]}
 				except IndexError:
 					#if we get and index error all houses have been processed into a dictionary and we are now done
 					break
